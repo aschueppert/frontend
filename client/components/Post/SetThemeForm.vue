@@ -4,36 +4,34 @@ import { formatDate } from "../../utils/formatDate";
 import { ref } from "vue";
 
 // Props and Emits
-const props = defineProps(["draft"]);
-const emit = defineEmits(["addContent", "refreshDrafts"]);
+const props = defineProps(["post"]);
+const emit = defineEmits(["setTheme", "refreshPosts"]);
 
 // Reactive references
-const content = ref("");
+const theme = ref("");
 
 // Function to add a member
-const addContent = async (content) => {
-  console.log(content);
+const setTheme = async (theme) => {
   try {
-    await fetchy(`/api/drafts/add/${props.draft._id}`, "PATCH", { body: { id: props.draft._id, content: content } });
+    await fetchy(`/api/posts/theme/${props.post._id}`, "PATCH", { body: { id: props.post._id, theme: theme } });
   } catch (e) {
     return;
   }
-  emit("addContent");
-  emit("refreshDrafts");
+  emit("setTheme");
+  emit("refreshPosts");
 };
 </script>
 
 <template>
-  <form @submit.prevent="addContent(content)">
-    <p class="members">Members: {{ props.draft.members.join(", ") }}</p>
-    <textarea v-model="content" id="content" placeholder="Add Content" required></textarea>
+  <form @submit.prevent="setTheme(theme)">
+    <textarea v-model="theme" id="theme" placeholder="Set Theme" required></textarea>
     <div class="base">
       <menu>
-        <li><button class="btn-small pure-button-primary pure-button" type="submit">Add</button></li>
-        <li><button class="btn-small pure-button" @click="emit('addContent')">Cancel</button></li>
+        <li><button class="btn-small pure-button-primary pure-button" type="submit">Set</button></li>
+        <li><button class="btn-small pure-button" @click="emit('setTheme')">Cancel</button></li>
       </menu>
-      <p v-if="props.draft.dateCreated !== props.draft.dateUpdated" class="timestamp">Edited on: {{ formatDate(props.draft.dateUpdated) }}</p>
-      <p v-else class="timestamp">Created on: {{ formatDate(props.draft.dateCreated) }}</p>
+      <p v-if="props.post.dateCreated !== props.post.dateUpdated" class="timestamp">Edited on: {{ formatDate(props.post.dateUpdated) }}</p>
+      <p v-else class="timestamp">Created on: {{ formatDate(props.post.dateCreated) }}</p>
     </div>
   </form>
 </template>
@@ -64,7 +62,7 @@ p {
   font-size: 1.2em;
 }
 
-.content {
+.theme {
   list-style-type: none;
   display: flex;
   flex-direction: row;

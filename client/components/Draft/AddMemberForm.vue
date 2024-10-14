@@ -8,24 +8,28 @@ const props = defineProps(["draft"]);
 const emit = defineEmits(["addMember", "refreshDrafts"]);
 
 // Reactive references
-const username = ref("");
+const member = ref("");
 
 // Function to add a member
-const addMember = async (username) => {
+const addMember = async (member) => {
+  console.log("adding memeber");
   try {
-    await fetchy(`/api/drafts/${props.draft._id}`, "PATCH", { body: { id: props.draft._id, member: username.value } });
+    console.log(member);
+    await fetchy(`/api/drafts/${props.draft._id}`, "PATCH", { body: { id: props.draft._id, member: member } });
   } catch (e) {
+    console.log("error");
+    console.log(e);
     return;
   }
-  emit("addMember", username.value);
+  emit("addMember");
   emit("refreshDrafts");
 };
 </script>
 
 <template>
-  <form @submit.prevent="addMember">
+  <form @submit.prevent="addMember(member)">
     <p class="members">Members: {{ props.draft.members.join(", ") }}</p>
-    <textarea v-model="username" id="username" placeholder="Add Member" required></textarea>
+    <textarea v-model="member" id="member" placeholder="Add Member" required></textarea>
     <div class="base">
       <menu>
         <li><button class="btn-small pure-button-primary pure-button" type="submit">Add</button></li>

@@ -1,9 +1,12 @@
 /* Add some global styles here! */
-
+@import url('https://fonts.googleapis.com/css?family=Comfortaa&display=swap');
 :root {
   --red: #E63946;
+  --yellow: #ffb400;
+  --green: green;
   --base-bg: white;
   --base-border: #08a4c7;
+  --base-font: 'Comfortaa', sans-serif;
 }
 
 button.btn-small {

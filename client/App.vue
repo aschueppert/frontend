@@ -35,7 +35,15 @@ onBeforeMount(async () => {
       <ul>
         <li>
           <RouterLink :to="{ name: 'Home' }" :class="{ underline: currentRouteName == 'Home' }"> Home </RouterLink>
+        </li>
+        <li>
           <RouterLink :to="{ name: 'Drafts' }" :class="{ underline: currentRouteName == 'Drafts' }"> Drafts </RouterLink>
+        </li>
+        <li>
+          <RouterLink :to="{ name: 'Posts' }" :class="{ underline: currentRouteName == 'Posts' }"> Posts </RouterLink>
+        </li>
+        <li>
+          <RouterLink :to="{ name: 'Images' }" :class="{ underline: currentRouteName == 'Images' }"> Images </RouterLink>
         </li>
         <li v-if="isLoggedIn">
           <RouterLink :to="{ name: 'Settings' }" :class="{ underline: currentRouteName == 'Settings' }"> Settings </RouterLink>
@@ -54,6 +62,10 @@ onBeforeMount(async () => {
 
 <style scoped>
 @import "./assets/toast.css";
+
+* {
+  font-family: var(--base-font);
+}
 
 nav {
   padding: 1em 2em;

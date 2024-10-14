@@ -12,12 +12,14 @@ async function logout() {
   void router.push({ name: "Home" });
 
   void router.push({ name: "Drafts" });
+  void router.push({ name: "Posts" });
 }
 
 async function delete_() {
   await deleteUser();
   void router.push({ name: "Home" });
   void router.push({ name: "Drafts" });
+  void router.push({ name: "Posts" });
 }
 </script>
 

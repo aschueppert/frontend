@@ -4,10 +4,11 @@ import { createRouter, createWebHistory } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import DraftsView from "../views/DraftsView.vue";
 import HomeView from "../views/HomeView.vue";
+import ImagesView from "../views/ImagesView.vue";
 import LoginView from "../views/LoginView.vue";
 import NotFoundView from "../views/NotFoundView.vue";
+import PostsView from "../views/PostsView.vue";
 import SettingView from "../views/SettingView.vue";
-
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -20,6 +21,16 @@ const router = createRouter({
       path: "/drafts",
       name: "Drafts",
       component: DraftsView,
+    },
+    {
+      path: "/posts",
+      name: "Posts",
+      component: PostsView,
+    },
+    {
+      path: "/images",
+      name: "Images",
+      component: ImagesView,
     },
     {
       path: "/setting",

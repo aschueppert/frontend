@@ -2,7 +2,7 @@ import { ObjectId } from "mongodb";
 
 import { Router, getExpressRouter } from "./framework/router";
 
-import { Authing, Drafting, Events, Following, Posting, Saving, Sessioning } from "./app";
+import { Authing, Drafting, Events, Following, Imaging, Posting, Saving, Sessioning } from "./app";
 import { SessionDoc } from "./concepts/sessioning";
 
 import { z } from "zod";
@@ -75,15 +75,13 @@ class Routes {
    * @param session - The session of the user creating the post.
    * @returns posts - The posts from users that the user is following.
    */
-  @Router.get("/posts/create/:id")
+  @Router.get("/posts/following")
   async getFollowingPosts(session: SessionDoc) {
     const user = Sessioning.getUser(session);
-    let posts = await Posting.getPosts();
     const relationships = await Following.getFollowing(user);
     const following = relationships.map((r) => r.following);
-    posts = posts.filter((post) => post.approvers.some((member) => following.map(String).includes(String(member))));
-    posts = posts.filter((post) => post.status == "approved");
-    return posts;
+    const posts = await Posting.getFollowingPosts(following);
+    return Responses.posts(posts);
   }
 
   /**
@@ -91,8 +89,9 @@ class Routes {
    * @param session - The session of the user creating the post.
    * @param username - The username of the user whose posts are being fetched.
    */
-  @Router.get("/posts/:user")
+  @Router.get("/posts/get/:username")
   async getUserPosts(session: SessionDoc, username: string) {
+    console.log("getting user posts");
     const user = Sessioning.getUser(session);
     const id = (await Authing.getUserByUsername(username))._id;
     let posts = await Posting.getByAuthor(id);
@@ -198,6 +197,18 @@ class Routes {
     return { msg: created.msg, draft: await Responses.draft(created.draft) };
   }
 
+  @Router.post("/images")
+  async createImage(url: string, name: string) {
+    return await Imaging.create(url, name);
+  }
+  @Router.get("/images/:name")
+  async getImage(name: string) {
+    return await Imaging.getImage(name);
+  }
+  @Router.get("/images")
+  async getImages() {
+    return await Imaging.getImages();
+  }
   /**
    * Creates an event
    * @param session the session of the user

@@ -29,7 +29,10 @@ const convertDraft = async () => {
 </script>
 
 <template>
+  <!-- Memeber-->
   <p class="members">Members: {{ props.draft.members.join(", ") }}</p>
+
+  <!-- Content-->
   <div class="content">
     <li v-for="(item, index) in props.draft.contentSet" :key="index">
       <button :class="['content_button', props.draft.selectedSet.includes(item) ? 'selected' : 'unselected']">
@@ -37,11 +40,19 @@ const convertDraft = async () => {
       </button>
     </li>
   </div>
+
+  <!-- Edit-->
   <div class="base">
     <menu v-if="props.draft.members.map(String).includes(String(currentUsername))">
       <li><button class="btn-small pure-button" @click="emit('addMember', props.draft._id)">Add Member</button></li>
       <li><button class="btn-small pure-button" @click="emit('addContent', props.draft._id)">Add Content</button></li>
       <li><button class="btn-small pure-button" @click="emit('selectContent', props.draft._id)">Select Content</button></li>
+    </menu>
+  </div>
+
+  <!-- Submit-->
+  <div class="base">
+    <menu v-if="props.draft.members.map(String).includes(String(currentUsername))">
       <li><button class="btn-small pure-button" @click="convertDraft">Post</button></li>
       <li><button class="button-error btn-small pure-button" @click="deleteDraft">Delete</button></li>
     </menu>

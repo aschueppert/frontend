@@ -12,6 +12,7 @@ async function login() {
   void updateSession();
   void router.push({ name: "Home" });
   void router.push({ name: "Drafts" });
+  void router.push({ name: "Posts" });
 }
 </script>
 
