@@ -22,17 +22,20 @@ onBeforeMount(async () => {
 </script>
 
 <template>
+  <head>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&display=swap" rel="stylesheet" />
+  </head>
   <header>
     <nav>
       <div class="title">
-        <img src="@/assets/images/logo.svg" />
         <RouterLink :to="{ name: 'Home' }">
-          <h1>Social Media App</h1>
+          <h1 class="logo">moodBoard</h1>
         </RouterLink>
       </div>
       <ul>
         <li>
           <RouterLink :to="{ name: 'Home' }" :class="{ underline: currentRouteName == 'Home' }"> Home </RouterLink>
+          <RouterLink :to="{ name: 'Drafts' }" :class="{ underline: currentRouteName == 'Drafts' }"> Drafts </RouterLink>
         </li>
         <li v-if="isLoggedIn">
           <RouterLink :to="{ name: 'Settings' }" :class="{ underline: currentRouteName == 'Settings' }"> Settings </RouterLink>
@@ -54,14 +57,22 @@ onBeforeMount(async () => {
 
 nav {
   padding: 1em 2em;
-  background-color: lightgray;
+  background-color: white;
   display: flex;
   align-items: center;
+  border-bottom: 3px solid #fc7000;
 }
 
 h1 {
   font-size: 2em;
   margin: 0;
+}
+
+.logo {
+  font-family: "Comfortaa", sans-serif;
+  font-weight: 700;
+  font-size: 2em;
+  color: #fc7005;
 }
 
 .title {
