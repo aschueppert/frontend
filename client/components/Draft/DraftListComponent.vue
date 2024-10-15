@@ -20,7 +20,8 @@ async function getDrafts() {
   let draftResults;
   try {
     draftResults = await fetchy("/api/drafts", "GET", {});
-  } catch (_) {
+  } catch (e) {
+    console.log(e);
     return;
   }
   drafts.value = draftResults;

@@ -11,7 +11,8 @@ const createImage = async (url: string, name: string) => {
     await fetchy("/api/images", "POST", {
       body: { url: url, name: name },
     });
-  } catch (_) {
+  } catch (e) {
+    console.log(e);
     return;
   }
   emit("refreshImages");

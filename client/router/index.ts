@@ -44,6 +44,7 @@ const router = createRouter({
       component: LoginView,
       meta: { requiresAuth: false },
       beforeEnter: (to, from) => {
+        console.log(to, from);
         const { isLoggedIn } = storeToRefs(useUserStore());
         if (isLoggedIn.value) {
           return { name: "Settings" };
@@ -62,6 +63,7 @@ const router = createRouter({
  * Navigation guards to prevent user from accessing wrong pages.
  */
 router.beforeEach((to, from) => {
+  console.log(from);
   const { isLoggedIn } = storeToRefs(useUserStore());
 
   if (to.meta.requiresAuth && !isLoggedIn.value) {

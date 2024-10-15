@@ -16,12 +16,14 @@ const selectContent = async (content: string) => {
     try {
       await fetchy(`/api/drafts/deselect/${props.draft._id}`, "PATCH", { body: { id: props.draft._id, content: content } });
     } catch (e) {
+      console.log(e);
       return;
     }
   } else {
     try {
       await fetchy(`/api/drafts/select/${props.draft._id}`, "PATCH", { body: { id: props.draft._id, content: content } });
     } catch (e) {
+      cosnole.log(e);
       return;
     }
   }

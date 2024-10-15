@@ -16,6 +16,7 @@ const addContent = async (name) => {
   try {
     await fetchy(`/api/drafts/add/${props.draft._id}`, "PATCH", { body: { id: props.draft._id, name: name } });
   } catch (e) {
+    console.log(e);
     return;
   }
   emit("addContent");

@@ -10,7 +10,8 @@ const createDraft = async (name: string) => {
     await fetchy("/api/drafts", "POST", {
       body: { name },
     });
-  } catch (_) {
+  } catch (e) {
+    console.log(e);
     return;
   }
   emit("refreshDrafts");

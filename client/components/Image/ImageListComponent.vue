@@ -14,7 +14,8 @@ async function getImages() {
   let imageResults;
   try {
     imageResults = await fetchy("/api/images", "GET", {});
-  } catch (_) {
+  } catch (e) {
+    console.log(e);
     return;
   }
   images.value = imageResults;

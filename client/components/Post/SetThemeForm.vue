@@ -15,6 +15,7 @@ const setTheme = async (theme) => {
   try {
     await fetchy(`/api/posts/theme/${props.post._id}`, "PATCH", { body: { id: props.post._id, theme: theme } });
   } catch (e) {
+    console.log(e);
     return;
   }
   emit("setTheme");
