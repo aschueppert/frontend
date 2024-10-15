@@ -30,7 +30,7 @@ const convertDraft = async () => {
 
 <template>
   <!-- Memeber-->
-  <p class="members">Members: {{ props.draft.members.join(", ") }}</p>
+  <p class="members">Members: {{ props.draft.members.join(", ") }} <button class="btn-small pure-button" @click="emit('addMember', props.draft._id)">+</button></p>
 
   <!-- Content-->
   <div class="image-container">
@@ -39,13 +39,12 @@ const convertDraft = async () => {
         <img class="square-image" :src="item" alt="Image description" />
       </button>
     </p>
+    <p><button class="content_button" id="add" @click="emit('addContent', props.draft._id)">+</button></p>
   </div>
 
   <!-- Edit-->
   <div class="base">
     <menu v-if="props.draft.members.map(String).includes(String(currentUsername))">
-      <li><button class="btn-small pure-button" @click="emit('addMember', props.draft._id)">Add Member</button></li>
-      <li><button class="btn-small pure-button" @click="emit('addContent', props.draft._id)">Add Content</button></li>
       <li><button class="btn-small pure-button" @click="emit('selectContent', props.draft._id)">Select Content</button></li>
     </menu>
   </div>
@@ -82,13 +81,6 @@ menu {
   margin: 0;
 }
 
-.timestamp {
-  display: flex;
-  justify-content: flex-end;
-  font-size: 0.9em;
-  font-style: italic;
-}
-
 .base {
   display: flex;
   justify-content: space-between;
@@ -98,17 +90,12 @@ menu {
 .base article:only-child {
   margin-left: auto;
 }
-.content_button {
-  font-size: 1.2em;
-  font-weight: bold;
-  padding: 0.5em;
-  border-radius: 4px;
-  background-color: var(--base-bg);
-  color: var(--base-text);
-  border: 1px solid var(--base-border);
-  cursor: pointer;
-}
 
+#add {
+  height: 127px;
+  width: 127px;
+  font-size: 3em;
+}
 .content_button.selected {
   background-color: #08a4c7; /* Color for selected items */
   color: white; /* Text color for selected items */
@@ -117,15 +104,5 @@ menu {
 .content_button.unselected {
   background-color: lightgray; /* Color for unselected items */
   color: black; /* Text color for unselected items */
-}
-.square-image {
-  width: 100px;
-  height: 100px;
-  object-fit: cover; /* Ensures the image fills the square without distortion */
-}
-.image-container {
-  display: flex; /* Use flexbox for layout */
-  flex-wrap: wrap; /* Allow items to wrap if needed */
-  gap: 10px; /* Space between images */
 }
 </style>

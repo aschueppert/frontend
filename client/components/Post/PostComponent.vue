@@ -61,7 +61,7 @@ p {
 }
 
 .members-block {
-  display: flex; /* Makes the children (members) align side by side */
+  display: flex;
   flex-wrap: wrap;
   font-weight: bold;
   font-size: 1.2em;
@@ -81,48 +81,13 @@ menu {
   margin: 0;
 }
 
-.timestamp {
-  display: flex;
-  justify-content: flex-end;
-  font-size: 0.9em;
-  font-style: italic;
-}
-
 .base {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.contents {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
 .base article:only-child {
   margin-left: auto;
-}
-.content_button {
-  font-size: 1.2em;
-  font-weight: bold;
-  padding: 0.5em;
-  border-radius: 4px;
-  background-color: var(--base-bg);
-  color: var(--base-text);
-  border: 1px solid var(--base-border);
-  cursor: pointer;
-}
-
-.square-image {
-  width: 100px;
-  height: 100px;
-  object-fit: cover; /* Ensures the image fills the square without distortion */
-}
-.image-container {
-  display: flex; /* Use flexbox for layout */
-  flex-wrap: wrap; /* Allow items to wrap if needed */
-  gap: 10px; /* Space between images */
 }
 </style>

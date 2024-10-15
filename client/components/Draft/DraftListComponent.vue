@@ -90,8 +90,7 @@ section {
 }
 
 section,
-p,
-.row {
+p {
   margin: 0 auto;
   max-width: 60em;
 }
@@ -108,12 +107,5 @@ article {
 
 .drafts {
   padding: 1em;
-}
-
-.row {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
-  max-width: 60em;
 }
 </style>

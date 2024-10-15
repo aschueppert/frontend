@@ -6,6 +6,7 @@
   --green: green;
   --base-bg: white;
   --base-border: #08a4c7;
+  --blue: #08a4c7;
   --base-font: 'Comfortaa', sans-serif;
 }
 
@@ -33,4 +34,35 @@ a.button {
   justify-content: center;
   align-items: center;
   gap: 1em;
+}
+
+
+.content_button {
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 0.5em;
+  border-radius: 4px;
+  background-color: lightgray;
+  color: var(--base-text);
+  border: 1px solid;
+  cursor: pointer;
+}
+
+.square-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover; /* Ensures the image fills the square without distortion */
+}
+
+.timestamp {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.9em;
+  font-style: italic;
+}
+
+.image-container {
+  display: flex; /* Use flexbox for layout */
+  flex-wrap: wrap; /* Allow items to wrap if needed */
+  gap: 10px; /* Space between images */
 }

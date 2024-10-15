@@ -81,27 +81,6 @@ p {
   margin: 0em;
 }
 
-.contentSet {
-  font-weight: bold;
-  font-size: 1.2em;
-}
-
-.content {
-  list-style-type: none;
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-  padding: 0;
-  margin: 0;
-}
-.username {
-  list-style-type: none;
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-  padding: 0;
-  margin: 0;
-}
 menu {
   list-style-type: none;
   display: flex;
@@ -117,24 +96,6 @@ menu {
   align-items: center;
 }
 
-.timestamp {
-  display: flex;
-  justify-content: flex-end;
-  font-size: 0.9em;
-  font-style: italic;
-}
-
-.content_button {
-  font-size: 1.2em;
-  font-weight: bold;
-  padding: 0.5em;
-  border-radius: 4px;
-  background-color: var(--base-bg);
-  color: var(--base-text);
-  border: 1px solid var(--base-border);
-  cursor: pointer;
-}
-
 .content_button.selected {
   background-color: #08a4c7; /* Color for selected items */
   color: white; /* Text color for selected items */
@@ -143,15 +104,5 @@ menu {
 .content_button.unselected {
   background-color: lightgray; /* Color for unselected items */
   color: black; /* Text color for unselected items */
-}
-.square-image {
-  width: 100px;
-  height: 100px;
-  object-fit: cover; /* Ensures the image fills the square without distortion */
-}
-.image-container {
-  display: flex; /* Use flexbox for layout */
-  flex-wrap: wrap; /* Allow items to wrap if needed */
-  gap: 10px; /* Space between images */
 }
 </style>

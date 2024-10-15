@@ -27,18 +27,23 @@ const emptyForm = () => {
   <form @submit.prevent="createDraft(name)">
     <label for="name">Draft Contents:</label>
     <textarea id="name" v-model="name" placeholder="Create a Draft!" required> </textarea>
-    <button type="submit" class="pure-button-primary pure-button">Create Draft</button>
+    <button type="submit" class="btn-small pure-button" id="submit">Create Draft</button>
   </form>
 </template>
 
 <style scoped>
 form {
   background-color: var(--base-bg);
+  border: 3px solid var(--blue);
   border-radius: 1em;
   display: flex;
   flex-direction: column;
   gap: 0.5em;
   padding: 1em;
+}
+#submit {
+  background-color: #08a4c7;
+  color: white;
 }
 
 textarea {

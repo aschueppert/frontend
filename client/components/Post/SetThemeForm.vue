@@ -71,14 +71,6 @@ p {
   padding: 0;
   margin: 0;
 }
-.username {
-  list-style-type: none;
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-  padding: 0;
-  margin: 0;
-}
 menu {
   list-style-type: none;
   display: flex;
@@ -92,12 +84,5 @@ menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.timestamp {
-  display: flex;
-  justify-content: flex-end;
-  font-size: 0.9em;
-  font-style: italic;
 }
 </style>
