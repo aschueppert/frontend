@@ -20,7 +20,8 @@ const createImage = async (url: string, name: string) => {
 };
 
 const emptyForm = () => {
-  content.value = "";
+  url.value = "";
+  name.value = "";
 };
 </script>
 

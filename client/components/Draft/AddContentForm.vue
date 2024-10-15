@@ -11,7 +11,7 @@ const emit = defineEmits(["addContent", "refreshDrafts"]);
 const name = ref("");
 
 // Function to add a member
-const addContent = async (name) => {
+const addContent = async (name: string) => {
   console.log(name);
   try {
     await fetchy(`/api/drafts/add/${props.draft._id}`, "PATCH", { body: { id: props.draft._id, name: name } });

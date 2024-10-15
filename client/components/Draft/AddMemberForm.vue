@@ -11,7 +11,7 @@ const emit = defineEmits(["addMember", "refreshDrafts"]);
 const member = ref("");
 
 // Function to add a member
-const addMember = async (member) => {
+const addMember = async (member: string) => {
   console.log("adding memeber");
   try {
     console.log(member);

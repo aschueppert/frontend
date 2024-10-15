@@ -11,7 +11,7 @@ const emit = defineEmits(["setTheme", "refreshPosts"]);
 const theme = ref("");
 
 // Function to add a member
-const setTheme = async (theme) => {
+const setTheme = async (theme: string) => {
   try {
     await fetchy(`/api/posts/theme/${props.post._id}`, "PATCH", { body: { id: props.post._id, theme: theme } });
   } catch (e) {

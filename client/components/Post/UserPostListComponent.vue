@@ -15,7 +15,7 @@ const { currentUsername } = storeToRefs(useUserStore());
 async function getPosts() {
   let postResults;
   try {
-    postResults = await fetchy(`/api/posts/get/${currentUsername._value}`, "GET", {});
+    postResults = await fetchy(`/api/posts/get/${currentUsername}`, "GET", {});
   } catch (_) {
     return;
   }
