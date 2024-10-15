@@ -35,12 +35,12 @@ const approvePost = async () => {
     </p>
   </div>
   <p>Theme: {{ props.post.theme }}</p>
-  <div class="content">
-    <li v-for="(item, index) in props.post.content" :key="index">
+  <div class="image-container">
+    <p v-for="(item, index) in props.post.content" :key="index">
       <button class="content_button">
-        {{ item }}
+        <img class="square-image" :src="item" alt="Image description" />
       </button>
-    </li>
+    </p>
   </div>
   <div class="base">
     <menu v-if="props.post.approvers.map(String).includes(String(currentUsername))">
@@ -113,5 +113,16 @@ menu {
   color: var(--base-text);
   border: 1px solid var(--base-border);
   cursor: pointer;
+}
+
+.square-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover; /* Ensures the image fills the square without distortion */
+}
+.image-container {
+  display: flex; /* Use flexbox for layout */
+  flex-wrap: wrap; /* Allow items to wrap if needed */
+  gap: 10px; /* Space between images */
 }
 </style>

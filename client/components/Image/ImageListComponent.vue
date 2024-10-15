@@ -34,9 +34,9 @@ onBeforeMount(async () => {
   </section>
 
   <!-- Section displaying the list of drafts -->
-  <section class="images" v-if="loaded && images.length !== 0">
-    <article v-for="image in images" :key="image._id">
-      <ImageComponent :image="image" @refreshImages="getImages" />
+  <section class="images-grid" v-if="loaded && images.length !== 0">
+    <article v-for="image in images" :key="image._id" class="image-item">
+      <ImageComponent :image="image" />
     </article>
   </section>
 
@@ -55,30 +55,25 @@ section {
 }
 
 section,
-p,
-.row {
+p {
   margin: 0 auto;
   max-width: 60em;
 }
 
-article {
+.images-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1em;
+  padding: 1em;
+}
+
+.image-item {
   background-color: var(--base-bg);
   border-radius: 1em;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
+  padding: 1em;
   border: 3px solid var(--base-border);
-  padding: 1em;
-}
-
-.images {
-  padding: 1em;
-}
-
-.row {
   display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
-  max-width: 60em;
+  justify-content: center;
+  align-items: center;
 }
 </style>

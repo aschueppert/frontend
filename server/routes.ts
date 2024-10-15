@@ -191,9 +191,10 @@ class Routes {
    * @returns Draft with the content
    */
   @Router.post("/drafts")
-  async createDraft(session: SessionDoc, content: string) {
+  async createDraft(session: SessionDoc, name: string) {
     const user = Sessioning.getUser(session);
-    const created = await Drafting.create(user, content);
+    const url = await Imaging.getURL(name);
+    const created = await Drafting.create(user, url);
     return { msg: created.msg, draft: await Responses.draft(created.draft) };
   }
 
@@ -325,11 +326,13 @@ class Routes {
    * */
 
   @Router.patch("/drafts/add/:id")
-  async addContent(session: SessionDoc, id: string, content: string) {
+  async addContent(session: SessionDoc, id: string, name: string) {
     const user = Sessioning.getUser(session);
     const draft_id = new ObjectId(id);
+    console.log(name);
+    const url = await Imaging.getURL(name);
     await Drafting.assertUserIsMember(draft_id, user);
-    return await Drafting.addContent(draft_id, content);
+    return await Drafting.addContent(draft_id, url);
   }
   /** Adds a member to members of draft
    * @param session the session of the user

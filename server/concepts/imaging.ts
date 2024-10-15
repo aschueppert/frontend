@@ -1,5 +1,5 @@
 import DocCollection, { BaseDoc } from "../framework/doc";
-
+import { NotFoundError } from "./errors";
 export interface ImageDoc extends BaseDoc {
   url: string;
   name: string;
@@ -28,5 +28,12 @@ export default class ImagingConcept {
   }
   async getImages() {
     return await this.images.readMany({}, { sort: { _id: -1 } });
+  }
+  async getURL(name: string) {
+    const image = await this.images.readOne({ name });
+    if (!image) {
+      throw new NotFoundError(`Image ${name} does not exist!`);
+    }
+    return image.url;
   }
 }

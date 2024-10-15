@@ -35,12 +35,12 @@ const selectContent = async (content: string) => {
   <!-- Select Content Form -->
   <form @submit.prevent="selectContent(content)">
     <p class="members">Members: {{ props.draft.members.join(", ") }}</p>
-    <div class="content-selection">
-      <li v-for="(item, index) in props.draft.contentSet" :key="index">
+    <div class="image-container">
+      <p v-for="(item, index) in props.draft.contentSet" :key="index">
         <button :class="['content_button', props.draft.selectedSet.includes(item) ? 'selected' : 'unselected']" @click.prevent="selectContent(item)">
-          {{ item }}
+          <img :src="item" alt="Image description" class="square-image" />
         </button>
-      </li>
+      </p>
     </div>
 
     <div class="base">
@@ -141,5 +141,15 @@ menu {
 .content_button.unselected {
   background-color: lightgray; /* Color for unselected items */
   color: black; /* Text color for unselected items */
+}
+.square-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover; /* Ensures the image fills the square without distortion */
+}
+.image-container {
+  display: flex; /* Use flexbox for layout */
+  flex-wrap: wrap; /* Allow items to wrap if needed */
+  gap: 10px; /* Space between images */
 }
 </style>
