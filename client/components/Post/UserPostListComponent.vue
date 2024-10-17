@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import PostComponent from "@/components/Post/PostComponent.vue";
+import SetThemeForm from "@/components/Post/SetThemeForm.vue";
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
-import { fetchy } from "../../utils/fetchy";
 import { onBeforeMount, ref } from "vue";
-import SetThemeForm from "@/components/Post/SetThemeForm.vue";
-import PostComponent from "@/components/Post/PostComponent.vue";
+import { fetchy } from "../../utils/fetchy";
 
 let setting = ref("");
 const loaded = ref(false);
@@ -15,7 +15,7 @@ const { currentUsername } = storeToRefs(useUserStore());
 async function getPosts() {
   let postResults;
   try {
-    postResults = await fetchy(`/api/posts/get/${currentUsername}`, "GET", {});
+    postResults = await fetchy(`/api/posts/get/${currentUsername.value}`, "GET", {});
   } catch (_) {
     return;
   }

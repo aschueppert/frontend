@@ -26,30 +26,35 @@ onBeforeMount(async () => {
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&display=swap" rel="stylesheet" />
   </head>
   <header>
-    <nav>
+    <!-- Top section for the logo -->
+    <div class="top-bar">
       <div class="title">
         <RouterLink :to="{ name: 'Home' }">
           <h1 class="logo">moodBoard</h1>
         </RouterLink>
       </div>
+    </div>
+
+    <!-- Bottom navigation bar -->
+    <nav>
       <ul>
         <li>
-          <RouterLink :to="{ name: 'Home' }" :class="{ underline: currentRouteName == 'Home' }"> Home </RouterLink>
+          <RouterLink :to="{ name: 'Home' }" :class="{ underline: currentRouteName == 'Home' }">Home</RouterLink>
         </li>
         <li>
-          <RouterLink :to="{ name: 'Drafts' }" :class="{ underline: currentRouteName == 'Drafts' }"> Drafts </RouterLink>
+          <RouterLink :to="{ name: 'Drafts' }" :class="{ underline: currentRouteName == 'Drafts' }">Drafts</RouterLink>
         </li>
         <li>
-          <RouterLink :to="{ name: 'Posts' }" :class="{ underline: currentRouteName == 'Posts' }"> Posts </RouterLink>
+          <RouterLink :to="{ name: 'Posts' }" :class="{ underline: currentRouteName == 'Posts' }">Posts</RouterLink>
         </li>
         <li>
-          <RouterLink :to="{ name: 'Images' }" :class="{ underline: currentRouteName == 'Images' }"> Images </RouterLink>
+          <RouterLink :to="{ name: 'Images' }" :class="{ underline: currentRouteName == 'Images' }">Images</RouterLink>
         </li>
         <li v-if="isLoggedIn">
-          <RouterLink :to="{ name: 'Settings' }" :class="{ underline: currentRouteName == 'Settings' }"> Settings </RouterLink>
+          <RouterLink :to="{ name: 'Settings' }" :class="{ underline: currentRouteName == 'Settings' }">Settings</RouterLink>
         </li>
         <li v-else>
-          <RouterLink :to="{ name: 'Login' }" :class="{ underline: currentRouteName == 'Login' }"> Login </RouterLink>
+          <RouterLink :to="{ name: 'Login' }" :class="{ underline: currentRouteName == 'Login' }">Login</RouterLink>
         </li>
       </ul>
     </nav>
@@ -65,14 +70,21 @@ onBeforeMount(async () => {
 
 * {
   font-family: var(--base-font);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-nav {
+/* Top bar for the logo */
+.top-bar {
   padding: 1em 2em;
   background-color: white;
-  display: flex;
-  align-items: center;
   border-bottom: 3px solid #fc7000;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  height: 70px; /* Set a specific height for the top bar */
 }
 
 h1 {
@@ -97,22 +109,56 @@ img {
   height: 2em;
 }
 
+/* Bottom navigation bar */
+nav {
+  padding: 0.5em 1em;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  border-top: 3px solid #fc7000;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  height: 60px;
+  z-index: 100;
+}
+
 a {
-  font-size: large;
+  font-size: medium;
   color: black;
   text-decoration: none;
 }
 
 ul {
   list-style-type: none;
-  margin-left: auto;
   display: flex;
   align-items: center;
   flex-direction: row;
-  gap: 1em;
+  gap: 0.8em;
+  flex-wrap: wrap;
 }
 
 .underline {
   text-decoration: underline;
+}
+
+/* Add padding to the content area to push it below the fixed top bar */
+body,
+main,
+.content {
+  padding-top: 70px; /* This should match the height of the top bar */
+  padding-bottom: 70px;
+}
+
+/* Toast styling */
+.toast {
+  position: fixed;
+  top: 70px; /* Shifted below the top bar */
+  width: 100%;
+  text-align: center;
+  padding: 1em;
 }
 </style>
