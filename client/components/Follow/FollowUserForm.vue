@@ -34,32 +34,4 @@ const emptyForm = () => {
   </form>
 </template>
 
-<style scoped>
-form {
-  background-color: var(--base-bg);
-  border: 3px solid var(--blue);
-  border-radius: 1em;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-  padding: 1em;
-
-  max-width: 100%; /* Ensure the form does not overflow the page */
-}
-#submit {
-  background-color: #08a4c7;
-  color: white;
-  max-width: 100%;
-}
-
-textarea {
-  font-family: inherit;
-  font-size: inherit;
-  height: 6em;
-  padding: 0.5em;
-  border-radius: 4px;
-  resize: none;
-  width: 100%; /* Make sure the textarea takes up available width */
-  box-sizing: border-box;
-}
-</style>
+<style scoped></style>

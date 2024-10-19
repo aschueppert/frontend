@@ -6,6 +6,7 @@ import { Authing, Drafting, Events, Following, Imaging, Posting, Saving, Session
 import { SessionDoc } from "./concepts/sessioning";
 
 import { z } from "zod";
+import { NotFoundError } from "./concepts/errors";
 import Responses from "./responses";
 
 /**
@@ -101,6 +102,22 @@ class Routes {
     return Responses.posts(posts);
   }
 
+  @Router.get("/post/:id")
+  async getPost(id: string) {
+    console.log("getting", id);
+    let oid = new ObjectId(id);
+    let post = await Posting.getPost(oid);
+    if (!post) {
+      throw new NotFoundError("Post does not exit");
+    }
+    console.log("post", post.approvers);
+    return Responses.post(post);
+  }
+
+  @Router.get("/save/names")
+  async getSavedNames() {
+    return await Saving.getNames();
+  }
   /**
    * Gets approved posts from a specific theme from people the user follows.
    * @param session - The session of the user

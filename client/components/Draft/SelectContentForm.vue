@@ -61,13 +61,6 @@ const selectContent = async (content: string) => {
   font-size: 1.2em;
 }
 
-form {
-  background-color: var(--base-bg);
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-}
-
 textarea {
   font-family: inherit;
   font-size: inherit;

@@ -24,6 +24,7 @@ onBeforeMount(async () => {
 <template>
   <head>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   </head>
   <header>
     <!-- Top section for the logo -->
@@ -39,19 +40,25 @@ onBeforeMount(async () => {
     <nav>
       <ul>
         <li>
-          <RouterLink :to="{ name: 'Home' }" :class="{ underline: currentRouteName == 'Home' }">Home</RouterLink>
+          <RouterLink :to="{ name: 'Home' }"><i class="fas fa-home"></i></RouterLink>
         </li>
         <li>
-          <RouterLink :to="{ name: 'Drafts' }" :class="{ underline: currentRouteName == 'Drafts' }">Drafts</RouterLink>
+          <RouterLink :to="{ name: 'Drafts' }"><i class="fas fa-plus" id="bordered-icon"></i></RouterLink>
         </li>
         <li>
-          <RouterLink :to="{ name: 'Posts' }" :class="{ underline: currentRouteName == 'Posts' }">Posts</RouterLink>
+          <RouterLink :to="{ name: 'Posts' }"> <i class="fas fa-camera photo-icon"></i> </RouterLink>
         </li>
         <li>
-          <RouterLink :to="{ name: 'Images' }" :class="{ underline: currentRouteName == 'Images' }">Images</RouterLink>
+          <RouterLink :to="{ name: 'Saved' }"><i class="fas fa-bookmark"></i></RouterLink>
+        </li>
+        <li>
+          <RouterLink :to="{ name: 'Following' }"><i class="fas fa-heart"></i></RouterLink>
+        </li>
+        <li>
+          <RouterLink :to="{ name: 'Images' }"><i class="fas fa-camera photo-icon"></i></RouterLink>
         </li>
         <li v-if="isLoggedIn">
-          <RouterLink :to="{ name: 'Settings' }" :class="{ underline: currentRouteName == 'Settings' }">Settings</RouterLink>
+          <RouterLink :to="{ name: 'Settings' }"><i class="fas fa-cog settings-icon"></i></RouterLink>
         </li>
         <li v-else>
           <RouterLink :to="{ name: 'Login' }" :class="{ underline: currentRouteName == 'Login' }">Login</RouterLink>
@@ -67,7 +74,7 @@ onBeforeMount(async () => {
 
 <style scoped>
 @import "./assets/toast.css";
-
+@import "./assets/main.css";
 * {
   font-family: var(--base-font);
   margin: 0;
@@ -111,25 +118,28 @@ img {
 
 /* Bottom navigation bar */
 nav {
-  padding: 0.5em 1em;
+  padding: 10px 1em; /* Add padding to the top */
   background-color: white;
   display: flex;
-  align-items: center;
+  align-items: center; /* Center items vertically */
   border-top: 3px solid #fc7000;
   position: fixed;
   bottom: 0;
   width: 100%;
   justify-content: center;
   box-sizing: border-box;
-  overflow: hidden;
-  height: 60px;
+  height: 70x;
   z-index: 100;
 }
 
 a {
   font-size: medium;
-  color: black;
+  color: #fc7000;
   text-decoration: none;
+}
+
+nav a {
+  font-size: 2em;
 }
 
 ul {
@@ -137,7 +147,7 @@ ul {
   display: flex;
   align-items: center;
   flex-direction: row;
-  gap: 0.8em;
+  gap: 1em;
   flex-wrap: wrap;
 }
 
@@ -150,7 +160,7 @@ body,
 main,
 .content {
   padding-top: 70px; /* This should match the height of the top bar */
-  padding-bottom: 70px;
+  padding-bottom: 80px;
 }
 
 /* Toast styling */
@@ -160,5 +170,13 @@ main,
   width: 100%;
   text-align: center;
   padding: 1em;
+}
+#bordered-icon {
+  display: inline-flex; /* Align items */
+  justify-content: center; /* Center icon */
+  align-items: center; /* Center icon */
+  border: 3px solid #fc7000; /* Add a border */
+  border-radius: 5px; /* Optional: rounded corners */
+  background-color: white; /* Optional: background color */
 }
 </style>

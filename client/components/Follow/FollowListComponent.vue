@@ -29,15 +29,17 @@ onBeforeMount(async () => {
 
 <template>
   <!-- Section displaying the list of accounts following -->
-  <section v-if="isLoggedIn">
+  <section class="page" v-if="isLoggedIn">
     <h2>Follow User:</h2>
     <FollowUserForm @refreshFollows="getFollowing" />
-  </section>
-  <section class="following" v-if="loaded && following.length !== 0">
-    <h2>Following:</h2>
-    <article v-for="follow in following" :key="follow._id">
-      <FollowComponent :follow="follow" />
-    </article>
+    <h2>Following</h2>
+    <section v-if="loaded && following.length !== 0">
+      <article v-for="follow in following" :key="follow._id">
+        <div class="items">
+          <FollowComponent :follow="follow" />
+        </div>
+      </article>
+    </section>
   </section>
 
   <!-- Message when no drafts are found -->
@@ -48,16 +50,13 @@ onBeforeMount(async () => {
 </template>
 
 <style scoped>
-section {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
+.items {
+  padding: 1em; /* Padding withing blue borders */
 }
 
 section,
 p {
   margin: 0 auto;
-  max-width: 60em;
 }
 
 article {
@@ -65,13 +64,11 @@ article {
   border-radius: 1em;
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
   border: 3px solid var(--base-border);
-  padding: 1em;
-  max-width: 30%;
+  margin-bottom: 10px;
 }
 
-.following {
-  padding: 1em;
+.page {
+  padding: 1em; /*not right along edge*/
 }
 </style>

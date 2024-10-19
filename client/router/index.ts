@@ -3,11 +3,13 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import { useUserStore } from "@/stores/user";
 import DraftsView from "../views/DraftsView.vue";
+import FollowingView from "../views/FollowingView.vue";
 import HomeView from "../views/HomeView.vue";
 import ImagesView from "../views/ImagesView.vue";
 import LoginView from "../views/LoginView.vue";
 import NotFoundView from "../views/NotFoundView.vue";
-import PostsView from "../views/PostsView.vue";
+import ProfileView from "../views/ProfileView.vue";
+import SavedView from "../views/SavedView.vue";
 import SettingView from "../views/SettingView.vue";
 const router = createRouter({
   history: createWebHistory(),
@@ -25,7 +27,17 @@ const router = createRouter({
     {
       path: "/posts",
       name: "Posts",
-      component: PostsView,
+      component: ProfileView,
+    },
+    {
+      path: "/saved",
+      name: "Saved",
+      component: SavedView,
+    },
+    {
+      path: "/following",
+      name: "Following",
+      component: FollowingView,
     },
     {
       path: "/images",

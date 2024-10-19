@@ -52,15 +52,12 @@ export default class SaveConcept {
     return save;
   }
 
-  async assertAuthorIsUser(_id: ObjectId, user: ObjectId) {
-    const save = await this.saved.readOne({ _id });
-    if (!save) {
-      throw new NotFoundError(`Save ${_id} does not exist!`);
-    }
-    if (save.author.toString() !== user.toString()) {
-      throw new SaveAuthorNotMatchError(user, _id);
-    }
+  async getNames() {
+    const names = await this.saved.readMany({}, { sort: { _id: -1 } });
+    return names.map((item) => item.name);
   }
+
+  async assertAuthorIsUser(_id: ObjectId, user: ObjectId) {}
 }
 
 export class SaveAuthorNotMatchError extends NotAllowedError {

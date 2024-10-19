@@ -68,6 +68,12 @@ export default class PostingConcept {
     // Returns all posts! You might want to page for better client performance
     return await this.posts.readMany({}, { sort: { _id: -1 } });
   }
+
+  async getPost(_id: ObjectId) {
+    // Returns all posts! You might want to page for better client performance
+    return await this.posts.readOne({ _id });
+  }
+
   async getFollowingPosts(following: Array<ObjectId>) {
     // Returns all posts! You might want to page for better client performance
     return await this.posts.readMany({ status: "Approved", approvers: { $in: following } });

@@ -46,24 +46,4 @@ button {
   padding: 0.5em 1em; /* Ensure the button has proper padding */
   font-size: 1em;
 }
-
-menu {
-  list-style-type: none;
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-  padding: 0;
-  margin: 0;
-}
-
-@media (max-width: 600px) {
-  .follow-container {
-    flex-direction: column; /* Stack items vertically on small screens */
-  }
-
-  button {
-    width: 100%; /* Full width button on small screens */
-    margin-top: 0.5em; /* Add some space between button and text */
-  }
-}
 </style>

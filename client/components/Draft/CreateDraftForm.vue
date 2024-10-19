@@ -31,27 +31,4 @@ const emptyForm = () => {
   </form>
 </template>
 
-<style scoped>
-form {
-  background-color: var(--base-bg);
-  border: 3px solid var(--blue);
-  border-radius: 1em;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-  padding: 1em;
-}
-#submit {
-  background-color: #08a4c7;
-  color: white;
-}
-
-textarea {
-  font-family: inherit;
-  font-size: inherit;
-  height: 6em;
-  padding: 0.5em;
-  border-radius: 4px;
-  resize: none;
-}
-</style>
+<style scoped></style>

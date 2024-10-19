@@ -11,7 +11,9 @@ const { currentUsername } = storeToRefs(useUserStore());
 
 // State to track the current image index
 const currentImageIndex = ref(0);
-
+const saveNames = ref<string[]>([]);
+const selectedName = ref<string | null>(null); // Initialize selectedName
+const showDropdown = ref(false); // Control dropdown visibility
 const deletePost = async () => {
   try {
     await fetchy(`/api/posts/delete/${props.post._id}`, "DELETE");
@@ -30,6 +32,26 @@ const approvePost = async () => {
   emit("refreshPosts");
 };
 
+const savePost = async () => {
+  try {
+    await fetchy(`/api/save`, "PATCH", { body: { _id: props.post._id, name: selectedName.value } });
+  } catch {
+    return;
+  }
+  emit("refreshPosts");
+};
+const getSaveNames = async () => {
+  let response;
+  try {
+    response = await fetchy(`/api/save/names`, "GET", {});
+    saveNames.value = response;
+  } catch {
+    return;
+  }
+  emit("refreshPosts");
+};
+
+getSaveNames();
 // Functions to navigate between images
 const nextImage = () => {
   if (currentImageIndex.value < props.post.content.length - 1) {
@@ -70,6 +92,17 @@ const prevImage = () => {
       <button class="btn-small pure-button" @click="emit('setTheme', props.post._id)">Set Theme</button>
       <button class="button-error btn-small pure-button" @click="deletePost">Delete</button>
     </article>
+
+    <div>
+      <button class="btn-small pure-button" @click="showDropdown = !showDropdown"><i class="fas fa-bookmark"></i></button>
+      <!-- Toggle dropdown visibility -->
+      <div v-if="showDropdown">
+        <select v-model="selectedName" @change="savePost">
+          <option disabled value="">Select a save label</option>
+          <option v-for="(name, index) in saveNames" :key="index" :value="name">{{ name }}</option>
+        </select>
+      </div>
+    </div>
     <article class="timestamp">
       <p v-if="props.post.dateCreated !== props.post.dateUpdated">{{ formatDate(props.post.dateUpdated) }}</p>
       <p v-else>{{ formatDate(props.post.dateCreated) }}</p>

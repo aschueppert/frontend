@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { fetchy } from "../../utils/fetchy";
 import { formatDate } from "../../utils/formatDate";
-import { ref } from "vue";
 
 // Props and Emits
 const props = defineProps(["draft"]);
@@ -40,22 +40,6 @@ const addContent = async (name: string) => {
 </template>
 
 <style scoped>
-form {
-  background-color: var(--base-bg);
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-}
-
-textarea {
-  font-family: inherit;
-  font-size: inherit;
-  height: 1.5em;
-  border-radius: 4px;
-  padding: 0.5;
-  resize: none;
-}
-
 p {
   margin: 0em;
 }

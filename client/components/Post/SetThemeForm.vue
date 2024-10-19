@@ -38,22 +38,6 @@ const setTheme = async (theme: string) => {
 </template>
 
 <style scoped>
-form {
-  background-color: var(--base-bg);
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-}
-
-textarea {
-  font-family: inherit;
-  font-size: inherit;
-  height: 1.5em;
-  border-radius: 4px;
-  padding: 0.5;
-  resize: none;
-}
-
 p {
   margin: 0em;
 }
