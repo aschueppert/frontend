@@ -1,13 +1,13 @@
 <script setup lang="ts">
+import AddContentForm from "@/components/Draft/AddContentForm.vue";
+import AddMemberForm from "@/components/Draft/AddMemberForm.vue";
+import CreateDraftForm from "@/components/Draft/CreateDraftForm.vue";
+import DraftComponent from "@/components/Draft/DraftComponent.vue";
+import SelectContentForm from "@/components/Draft/SelectContentForm.vue";
 import { useUserStore } from "@/stores/user";
 import { fetchy } from "@/utils/fetchy";
 import { storeToRefs } from "pinia";
 import { onBeforeMount, ref } from "vue";
-import CreateDraftForm from "@/components/Draft/CreateDraftForm.vue";
-import DraftComponent from "@/components/Draft/DraftComponent.vue";
-import AddMemberForm from "@/components/Draft/AddMemberForm.vue";
-import AddContentForm from "@/components/Draft/AddContentForm.vue";
-import SelectContentForm from "@/components/Draft/SelectContentForm.vue";
 const { isLoggedIn } = storeToRefs(useUserStore());
 
 const loaded = ref(false);
@@ -49,8 +49,10 @@ onBeforeMount(async () => {
   <section v-if="isLoggedIn">
     <h2>Create a Draft:</h2>
     <CreateDraftForm @refreshDrafts="getDrafts" />
-  </section>
 
+    <h2> Drafts: </h2>
+  </section>
+ 
   <!-- Section displaying the list of drafts -->
   <section class="drafts" v-if="loaded && drafts.length !== 0">
     <article v-for="draft in drafts" :key="draft._id">
@@ -76,10 +78,10 @@ onBeforeMount(async () => {
   </section>
 
   <!-- Message when no drafts are found -->
-  <p v-else-if="loaded">No drafts found</p>
+  <section v-else-if="loaded">No drafts found</section>
 
   <!-- Loading message -->
-  <p v-else>Loading...</p>
+  <section v-else>Loading...</section>
 </template>
 
 <style scoped>
@@ -87,6 +89,8 @@ section {
   display: flex;
   flex-direction: column;
   gap: 1em;
+  padding-left: 1em; /* Add left padding to the section */
+  padding-right: 1em; /* Add right padding for symmetry */
 }
 
 section,
@@ -107,5 +111,7 @@ article {
 
 .drafts {
   padding: 1em;
+  padding-left: 1em; /* Ensure padding for drafts section */
+  padding-right: 1em; /* Symmetry on right side as well */
 }
 </style>

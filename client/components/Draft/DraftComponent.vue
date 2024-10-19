@@ -2,8 +2,8 @@
 import { useUserStore } from "@/stores/user";
 import { formatDate } from "@/utils/formatDate";
 import { storeToRefs } from "pinia";
+import { defineEmits, defineProps } from "vue";
 import { fetchy } from "../../utils/fetchy";
-import { defineProps, defineEmits } from "vue";
 
 const props = defineProps(["draft"]);
 const emit = defineEmits(["addMember", "addContent", "selectContent", "convertDraft", "refreshDrafts"]);
@@ -44,51 +44,41 @@ const convertDraft = async () => {
 
   <!-- Edit-->
   <div class="base">
-    <menu v-if="props.draft.members.map(String).includes(String(currentUsername))">
+    <menu v-if="props.draft.members.map(String).includes(String(currentUsername))" class="button-menu">
       <li><button class="btn-small pure-button" @click="emit('selectContent', props.draft._id)">Select Content</button></li>
     </menu>
   </div>
 
   <!-- Submit-->
   <div class="base">
-    <menu v-if="props.draft.members.map(String).includes(String(currentUsername))">
+    <menu v-if="props.draft.members.map(String).includes(String(currentUsername))" class="button-menu">
       <li><button class="btn-small pure-button" @click="convertDraft">Post</button></li>
       <li><button class="button-error btn-small pure-button" @click="deleteDraft">Delete</button></li>
     </menu>
     <article class="timestamp">
-      <p v-if="props.draft.dateCreated !== props.draft.dateUpdated">Edited on: {{ formatDate(props.draft.dateUpdated) }}</p>
-      <p v-else>Created on: {{ formatDate(props.draft.dateCreated) }}</p>
+      <p v-if="props.draft.dateCreated !== props.draft.dateUpdated">{{ formatDate(props.draft.dateUpdated) }}</p>
+      <p v-else>{{ formatDate(props.draft.dateCreated) }}</p>
     </article>
   </div>
 </template>
-
 <style scoped>
 p {
-  margin: 0em;
+  margin: 0.2em 0; /* Reduced margin */
 }
 
 .members {
   font-weight: bold;
   font-size: 1.2em;
+  margin-bottom: 0.5em; /* Small space between members and content */
 }
 
 menu {
   list-style-type: none;
   display: flex;
   flex-direction: row;
-  gap: 1em;
+  gap: 0.5em; /* Reduced gap between buttons */
   padding: 0;
   margin: 0;
-}
-
-.base {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.base article:only-child {
-  margin-left: auto;
 }
 
 #add {
@@ -96,6 +86,7 @@ menu {
   width: 127px;
   font-size: 3em;
 }
+
 .content_button.selected {
   background-color: #08a4c7; /* Color for selected items */
   color: white; /* Text color for selected items */
@@ -104,5 +95,50 @@ menu {
 .content_button.unselected {
   background-color: lightgray; /* Color for unselected items */
   color: black; /* Text color for unselected items */
+}
+
+.members-block {
+  display: flex;
+  flex-wrap: wrap;
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-right: 5px;
+}
+
+.members {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.image-container {
+  margin-bottom: 0.2em; /* Reduced margin */
+}
+
+menu {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+}
+
+.base {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1em;
+}
+
+.button-menu {
+  display: flex;
+  flex-direction: row;
+  gap: 0.1em;
+}
+
+.timestamp {
+  gap: 0.1em; /* Reduced space between buttons and timestamp */
+}
+
+.base article {
+  margin-left: 0;
 }
 </style>

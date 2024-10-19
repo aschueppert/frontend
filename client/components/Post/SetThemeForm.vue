@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { fetchy } from "../../utils/fetchy";
 import { formatDate } from "../../utils/formatDate";
-import { ref } from "vue";
 
 // Props and Emits
 const props = defineProps(["post"]);

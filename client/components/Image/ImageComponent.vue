@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
-
 const props = defineProps(["image"]);
 console.log(props.image.url);
 </script>
