@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { fetchy } from "../../utils/fetchy";
-import { formatDate } from "../../utils/formatDate";
 
 // Props and Emits
 const props = defineProps(["draft"]);
@@ -32,11 +31,9 @@ const addMember = async (member: string) => {
     <textarea v-model="member" id="member" placeholder="Add Member" required></textarea>
     <div class="base">
       <menu>
-        <li><button class="btn-small pure-button-primary pure-button" type="submit">Add</button></li>
+        <li><button class="btn-small pure-button-primary pure-button" type="submit" id="submit">Add</button></li>
         <li><button class="btn-small pure-button" @click="emit('addMember')">Cancel</button></li>
       </menu>
-      <p v-if="props.draft.dateCreated !== props.draft.dateUpdated" class="timestamp">Edited on: {{ formatDate(props.draft.dateUpdated) }}</p>
-      <p v-else class="timestamp">Created on: {{ formatDate(props.draft.dateCreated) }}</p>
     </div>
   </form>
 </template>

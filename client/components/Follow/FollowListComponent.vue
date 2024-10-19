@@ -36,7 +36,7 @@ onBeforeMount(async () => {
     <section v-if="loaded && following.length !== 0">
       <article v-for="follow in following" :key="follow._id">
         <div class="items">
-          <FollowComponent :follow="follow" />
+          <FollowComponent :follow="follow" @refreshFollows="getFollowing" />
         </div>
       </article>
     </section>

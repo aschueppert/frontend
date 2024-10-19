@@ -30,7 +30,7 @@ const addContent = async (name: string) => {
     <textarea v-model="name" id="name" placeholder="Add Content" required></textarea>
     <div class="base">
       <menu>
-        <li><button class="btn-small pure-button-primary pure-button" type="submit">Add</button></li>
+        <li><button class="btn-small pure-button-primary pure-button" type="submit" id="submit">Add</button></li>
         <li><button class="btn-small pure-button" @click="emit('addContent')">Cancel</button></li>
       </menu>
       <p v-if="props.draft.dateCreated !== props.draft.dateUpdated" class="timestamp">Edited on: {{ formatDate(props.draft.dateUpdated) }}</p>
@@ -61,5 +61,8 @@ menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+form {
+  margin: 0;
 }
 </style>

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { fetchy } from "../../utils/fetchy";
-import { formatDate } from "../../utils/formatDate";
 
 // Props and Emits
 const props = defineProps(["draft"]);
@@ -49,8 +48,6 @@ const selectContent = async (content: string) => {
       <menu>
         <li><button class="btn-small pure-button" @click="emit('selectContent')">Cancel</button></li>
       </menu>
-      <p v-if="props.draft.dateCreated !== props.draft.dateUpdated" class="timestamp">Edited on: {{ formatDate(props.draft.dateUpdated) }}</p>
-      <p v-else class="timestamp">Created on: {{ formatDate(props.draft.dateCreated) }}</p>
     </div>
   </form>
 </template>
@@ -59,15 +56,6 @@ const selectContent = async (content: string) => {
 .members {
   font-weight: bold;
   font-size: 1.2em;
-}
-
-textarea {
-  font-family: inherit;
-  font-size: inherit;
-  height: 1.5em;
-  border-radius: 4px;
-  padding: 0.5;
-  resize: none;
 }
 
 p {

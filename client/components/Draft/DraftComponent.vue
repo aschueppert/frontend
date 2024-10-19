@@ -134,10 +134,6 @@ menu {
   gap: 0.1em;
 }
 
-.timestamp {
-  gap: 0.1em; /* Reduced space between buttons and timestamp */
-}
-
 .base article {
   margin-left: 0;
 }

@@ -9,7 +9,7 @@ const { currentUsername } = storeToRefs(useUserStore());
 
 const deleteFollowing = async () => {
   try {
-    await fetchy(`/follows/${props.follow.following}`, "DELETE");
+    await fetchy(`/api/follows/${props.follow.following}`, "DELETE");
   } catch {
     return;
   }

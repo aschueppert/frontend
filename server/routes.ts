@@ -474,7 +474,7 @@ class Routes {
    * @param username the username of the user to unfollow
    * @returns msg that user was unfollowed
    * */
-  @Router.delete("/follows/:follow")
+  @Router.delete("/follows/:username")
   async unfollow(session: SessionDoc, username: string) {
     const user = Sessioning.getUser(session);
     const friendOid = (await Authing.getUserByUsername(username))._id;
