@@ -1,6 +1,13 @@
 /* Add some global styles here! */
 @import url("https://fonts.googleapis.com/css?family=Comfortaa&display=swap");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css");
+* {
+  box-sizing: border-box; /* Apply box-sizing to all elements */
+  margin: 0;
+  gap: 0;
+  padding: 0;
+}
+
 :root {
   --red: #e63946;
   --yellow: #ffb400;
@@ -13,6 +20,26 @@
 
 button.btn-small {
   font-size: 80%;
+  display: grid;
+  gap: 0.5em;
+  text-align: center;
+  vertical-align: center;
+  cursor: pointer; /* Change cursor to pointer on hover */
+  display: inline-flex; /* Ensures icons are centered */
+  align-items: center; /* Centers icon vertically */
+}
+button.green {
+  background-color: var(--green);
+  color: white;
+}
+
+button.primary {
+  background-color: var(--blue);
+  color: white;
+}
+button.btn-small.selected {
+  background-color: var(--blue); /* Change background color when selected */
+  color: white; /* Change text color for better contrast */
 }
 
 button.button-error {
@@ -56,8 +83,9 @@ a.button {
 
 .timestamp {
   display: flex;
+  margin-top: 1em;
   justify-content: flex-end;
-  font-size: 0.9em;
+  font-size: 1em;
   font-style: italic;
 }
 
@@ -70,21 +98,66 @@ a.button {
 textarea {
   font-family: inherit;
   font-size: inherit;
-  height: 1.5em;
+  height: 2em;
   padding: 0.5em;
+  width: 100%;
 }
-form {
-  background-color: var(--base-bg);
-  border: 3px solid var(--blue);
-  border-radius: 1em;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-  padding: 1em;
-  max-width: 100%; /* Ensure the form does not overflow the page */
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+  height: 2em;
+  padding: 0.5em;
+  margin-bottom: 1em;
+  width: 100%;
 }
+
 #submit {
   background-color: #08a4c7;
   color: white;
   max-width: 100%;
+}
+
+.item-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5em; /* Adjust gap between user items */
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  list-style-type: none;
+}
+
+.overlay {
+  position: absolute; /* Position absolute to cover the article */
+  top: 0; /* Align to the top */
+  left: 0; /* Align to the left */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(128, 128, 128, 0.5); /* Translucent grey */
+  /*border-radius: 1em;*/
+  z-index: 5; /* Position below the overlay form but above other content */
+}
+
+.overlay-form {
+  position: absolute; /* Position relative to the nearest positioned ancestor */
+  bottom: 0; /* Align at the bottom */
+  z-index: 10; /* Ensure it appears above other content */
+  height: 60%;
+  width: 100%;
+  background-color: white; /* Background for visibility */
+  padding: 1em;
+  /*border-radius: 1em;*/
+}
+
+form {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+h3 {
+  text-align: center;
+  margin-bottom: 0.5em;
 }

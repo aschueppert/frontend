@@ -34,6 +34,17 @@ onBeforeMount(async () => {
           <h1 class="logo">moodBoard</h1>
         </RouterLink>
       </div>
+      <div class="top-nav">
+        <ul>
+          <li>
+            <RouterLink :to="{ name: 'Posts' }"> <i class="fas fa-camera photo-icon"></i> </RouterLink>
+          </li>
+          <li v-if="isLoggedIn">
+            <RouterLink :to="{ name: 'Settings' }"><i class="fas fa-cog settings-icon"></i></RouterLink>
+          </li>
+          <li v-else><RouterLink :to="{ name: 'Login' }" :class="{ underline: currentRouteName == 'Login' }">Login</RouterLink></li>
+        </ul>
+      </div>
     </div>
 
     <!-- Bottom navigation bar -->
@@ -46,9 +57,6 @@ onBeforeMount(async () => {
           <RouterLink :to="{ name: 'Drafts' }"><i class="fas fa-plus" id="bordered-icon"></i></RouterLink>
         </li>
         <li>
-          <RouterLink :to="{ name: 'Posts' }"> <i class="fas fa-camera photo-icon"></i> </RouterLink>
-        </li>
-        <li>
           <RouterLink :to="{ name: 'Saved' }"><i class="fas fa-bookmark"></i></RouterLink>
         </li>
         <li>
@@ -56,12 +64,6 @@ onBeforeMount(async () => {
         </li>
         <li>
           <RouterLink :to="{ name: 'Images' }"><i class="fas fa-camera photo-icon"></i></RouterLink>
-        </li>
-        <li v-if="isLoggedIn">
-          <RouterLink :to="{ name: 'Settings' }"><i class="fas fa-cog settings-icon"></i></RouterLink>
-        </li>
-        <li v-else>
-          <RouterLink :to="{ name: 'Login' }" :class="{ underline: currentRouteName == 'Login' }">Login</RouterLink>
         </li>
       </ul>
     </nav>
@@ -92,6 +94,8 @@ onBeforeMount(async () => {
   width: 100%;
   z-index: 100;
   height: 70px; /* Set a specific height for the top bar */
+  display: flex;
+  justify-content: space-between;
 }
 
 h1 {
@@ -139,6 +143,9 @@ a {
 }
 
 nav a {
+  font-size: 2em;
+}
+.top-nav a {
   font-size: 2em;
 }
 

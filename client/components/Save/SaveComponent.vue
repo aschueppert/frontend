@@ -35,7 +35,7 @@ onMounted(async () => {
 <template>
   <div class="base">
     <article v-for="item_id in props.save.items" :key="item_id" class="post-item">
-      <div v-if="items[item_id] !== undefined" class="scale-down">
+      <div v-if="items[item_id] !== undefined">
         <PostComponent :post="items[item_id]" />
       </div>
       <div v-else>Loading...</div>
@@ -45,12 +45,13 @@ onMounted(async () => {
 
 <style scoped>
 .base {
-  display: flex; /* Enable Flexbox */
-  flex-wrap: wrap; /* Allow items to wrap to the next line if needed */
-  justify-content: flex-start; /* Align items to the start */
+  display: flex; /* Use Flexbox for layout */
+  flex-wrap: wrap; /* Allow items to wrap if necessary */
+  padding: 0; /* Remove any padding */
+  margin-left: 1em;
 }
 
 .post-item {
-  margin: 5px; /* Add margin between items */
+  flex: 0 1 calc(30% - 1em); /* Flex-grow: 0; Flex-shrink: 1; Flex-basis: 50% minus gap */
 }
 </style>

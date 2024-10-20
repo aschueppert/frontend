@@ -34,7 +34,7 @@ onBeforeMount(async () => {
     <h2>Saved:</h2>
     <section v-if="loaded && saved.length !== 0">
       <article v-for="save in saved" :key="save._id">
-        <h1 class="header">{{ save.name }}</h1>
+        <h3 class="header">{{ save.name }}</h3>
         <div class="items">
           <SaveComponent :save="save" @refreshSaved="getSaved" class="save-component" />
         </div>

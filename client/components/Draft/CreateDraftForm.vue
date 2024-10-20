@@ -25,9 +25,8 @@ const emptyForm = () => {
 
 <template>
   <form @submit.prevent="createDraft(name)">
-    <label for="name">Draft Contents:</label>
     <textarea id="name" v-model="name" placeholder="Create a Draft!" required> </textarea>
-    <button type="submit" class="btn-small pure-button" id="submit">Create Draft</button>
+    <button type="submit" class="btn-small pure-button primary">Create</button>
   </form>
 </template>
 

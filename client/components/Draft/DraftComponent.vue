@@ -30,30 +30,24 @@ const convertDraft = async () => {
 
 <template>
   <!-- Memeber-->
-  <p class="members">Members: {{ props.draft.members.join(", ") }} <button class="btn-small pure-button" @click="emit('addMember', props.draft._id)">+</button></p>
+  <div class="page">
+    <p class="members">Members: {{ props.draft.members.join(", ") }} <button class="btn-small pure-button" @click="emit('addMember', props.draft._id)">+</button></p>
 
-  <!-- Content-->
-  <div class="image-container">
-    <p v-for="(item, index) in props.draft.contentSet" :key="index">
-      <button :class="['content_button', props.draft.selectedSet.includes(item) ? 'selected' : 'unselected']">
-        <img class="square-image" :src="item" alt="Image description" />
-      </button>
-    </p>
-    <p><button class="content_button" id="add" @click="emit('addContent', props.draft._id)">+</button></p>
-  </div>
+    <!-- Content-->
+    <div class="image-container">
+      <p v-for="(item, index) in props.draft.contentSet" :key="index">
+        <button class="btn-small pure-button" :class="{ selected: props.draft.selectedSet.includes(item) }">
+          <img class="square-image" :src="item" alt="Image description" />
+        </button>
+      </p>
+      <p><button class="btn-small pure-button" id="add" @click="emit('addContent', props.draft._id)">+</button></p>
+    </div>
 
-  <!-- Edit-->
-  <div class="base">
+    <!-- Edit-->
     <menu v-if="props.draft.members.map(String).includes(String(currentUsername))" class="button-menu">
-      <li><button class="btn-small pure-button" @click="emit('selectContent', props.draft._id)">Select Content</button></li>
-    </menu>
-  </div>
-
-  <!-- Submit-->
-  <div class="base">
-    <menu v-if="props.draft.members.map(String).includes(String(currentUsername))" class="button-menu">
-      <li><button class="btn-small pure-button" @click="convertDraft">Post</button></li>
-      <li><button class="button-error btn-small pure-button" @click="deleteDraft">Delete</button></li>
+      <li><button class="btn-small pure-button item" @click="emit('selectContent', props.draft._id)">Select Content</button></li>
+      <li><button class="btn-small pure-button item" @click="convertDraft">Post</button></li>
+      <li><button class="button-error btn-small pure-button item" @click="deleteDraft">Delete</button></li>
     </menu>
     <article class="timestamp">
       <p v-if="props.draft.dateCreated !== props.draft.dateUpdated">{{ formatDate(props.draft.dateUpdated) }}</p>
@@ -63,78 +57,40 @@ const convertDraft = async () => {
 </template>
 <style scoped>
 p {
-  margin: 0.2em 0; /* Reduced margin */
+  gap: 0em;
 }
 
 .members {
   font-weight: bold;
   font-size: 1.2em;
-  margin-bottom: 0.5em; /* Small space between members and content */
 }
 
+.page {
+  padding: 0.5em;
+}
 menu {
   list-style-type: none;
   display: flex;
   flex-direction: row;
   gap: 0.5em; /* Reduced gap between buttons */
-  padding: 0;
-  margin: 0;
 }
 
 #add {
-  height: 127px;
-  width: 127px;
-  font-size: 3em;
-}
-
-.content_button.selected {
-  background-color: #08a4c7; /* Color for selected items */
-  color: white; /* Text color for selected items */
-}
-
-.content_button.unselected {
-  background-color: lightgray; /* Color for unselected items */
-  color: black; /* Text color for unselected items */
-}
-
-.members-block {
-  display: flex;
-  flex-wrap: wrap;
-  font-weight: bold;
-  font-size: 1.2em;
-  margin-right: 5px;
-}
-
-.members {
-  display: inline-block;
-  margin-right: 5px;
+  height: 113px; /* Match this with image button size */
+  width: 100px; /* Match this with image button size */
+  font-size: 60px; /* You might want to adjust this for better fit */
+  align-items: center;
+  object-fit: cover;
 }
 
 .image-container {
-  margin-bottom: 0.2em; /* Reduced margin */
-}
-
-menu {
-  list-style-type: none;
-  display: flex;
-  flex-direction: row;
-  gap: 0.5em;
+  margin-bottom: 1em;
 }
 
 .base {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.1em;
-}
-
-.button-menu {
-  display: flex;
-  flex-direction: row;
-  gap: 0.1em;
-}
-
-.base article {
-  margin-left: 0;
+  gap: 1em;
 }
 </style>

@@ -20,11 +20,11 @@ async function getDrafts() {
   let draftResults;
   try {
     draftResults = await fetchy("/api/drafts", "GET", {});
+    drafts.value = draftResults;
   } catch (e) {
     console.log(e);
     return;
   }
-  drafts.value = draftResults;
 }
 
 function updateAdding(id: string) {
@@ -49,32 +49,24 @@ onBeforeMount(async () => {
   <section v-if="isLoggedIn">
     <h2>Create a Draft:</h2>
     <CreateDraftForm @refreshDrafts="getDrafts" />
-
-    <h2> Drafts: </h2>
+    <h2>Drafts:</h2>
   </section>
- 
+
   <!-- Section displaying the list of drafts -->
-  <section class="drafts" v-if="loaded && drafts.length !== 0">
-    <article v-for="draft in drafts" :key="draft._id">
-      <!-- Show DraftComponent if not adding/selecting the draft -->
-      <DraftComponent
-        v-if="adding !== draft._id && selecting !== draft._id && addingContent !== draft._id"
-        :draft="draft"
-        @refreshDrafts="getDrafts"
-        @addMember="updateAdding"
-        @selectContent="updateSelecting"
-        @addContent="updateAddingContent"
-      />
 
-      <!-- Show AddMemberForm if adding this draft for adding members -->
-      <AddMemberForm v-else-if="adding === draft._id" :draft="draft" @refreshDrafts="getDrafts" @addMember="updateAdding" />
-
-      <!-- Show AddMemberForm if adding this draft for adding members -->
-      <AddContentForm v-else-if="addingContent === draft._id" :draft="draft" @refreshDrafts="getDrafts" @addContent="updateAddingContent" />
-
-      <!-- Show SelectContentForm if selcting this draft for content selection -->
-      <SelectContentForm v-else :draft="draft" @refreshDrafts="getDrafts" @selectContent="updateSelecting" />
-    </article>
+  <section v-if="loaded && drafts.length !== 0">
+    <div class="overlap-container">
+      <article v-for="draft in drafts" :key="draft._id">
+        <!-- Show DraftComponent if not adding/selecting the draft -->
+        <div v-if="adding === draft._id" class="overlay"></div>
+        <DraftComponent :draft="draft" @refreshDrafts="getDrafts" @addMember="updateAdding" @selectContent="updateSelecting" @addContent="updateAddingContent" class="drafts" />
+        <!-- Show AddContentForm if adding content -->
+        <AddContentForm v-if="addingContent === draft._id" :draft="draft" @refreshDrafts="getDrafts" @addContent="updateAddingContent" />
+        <AddMemberForm v-else-if="adding === draft._id" :draft="draft" @refreshDrafts="getDrafts" @addMember="updateAdding" class="overlay-form" />
+        <!-- Show SelectContentForm if selecting this draft for content selection -->
+        <SelectContentForm v-else-if="selecting === draft._id" :draft="draft" @refreshDrafts="getDrafts" @selectContent="updateSelecting" />
+      </article>
+    </div>
   </section>
 
   <!-- Message when no drafts are found -->
@@ -92,26 +84,45 @@ section {
   padding-left: 1em; /* Add left padding to the section */
   padding-right: 1em; /* Add right padding for symmetry */
 }
+.overlap-container {
+  position: relative; /* Set this to relative to contain absolutely positioned elements */
+  overflow: hidden;
+}
 
+.overlay-form {
+  position: absolute; /* Position relative to the nearest positioned ancestor */
+  bottom: 0; /* Align at the bottom */
+  z-index: 10; /* Ensure it appears above other content */
+  height: 60%;
+  width: 100%;
+  background-color: white; /* Background for visibility */
+  padding: 1em;
+  border-radius: 1em;
+}
 section,
 p {
   margin: 0 auto;
-  max-width: 60em;
 }
-
+.overlay {
+  position: absolute; /* Position absolute to cover the article */
+  top: 0; /* Align to the top */
+  left: 0; /* Align to the left */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(128, 128, 128, 0.5); /* Translucent grey */
+  border-radius: 1em;
+  z-index: 5; /* Position below the overlay form but above other content */
+}
 article {
+  position: relative; /* Add relative positioning to the article */
   background-color: var(--base-bg);
   border-radius: 1em;
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
   border: 3px solid var(--base-border);
-  padding: 1em;
 }
 
 .drafts {
   padding: 1em;
-  padding-left: 1em; /* Ensure padding for drafts section */
-  padding-right: 1em; /* Symmetry on right side as well */
 }
 </style>

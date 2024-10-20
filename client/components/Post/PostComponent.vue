@@ -6,14 +6,11 @@ import { defineEmits, defineProps, ref } from "vue";
 import { fetchy } from "../../utils/fetchy";
 
 const props = defineProps(["post"]);
-const emit = defineEmits(["refreshPosts", "setTheme"]);
+const emit = defineEmits(["refreshPosts", "setTheme", "savePost"]);
 const { currentUsername } = storeToRefs(useUserStore());
 
 // State to track the current image index
 const currentImageIndex = ref(0);
-const saveNames = ref<string[]>([]);
-const selectedName = ref<string | null>(null); // Initialize selectedName
-const showDropdown = ref(false); // Control dropdown visibility
 const deletePost = async () => {
   try {
     await fetchy(`/api/posts/delete/${props.post._id}`, "DELETE");
@@ -32,26 +29,6 @@ const approvePost = async () => {
   emit("refreshPosts");
 };
 
-const savePost = async () => {
-  try {
-    await fetchy(`/api/save`, "PATCH", { body: { _id: props.post._id, name: selectedName.value } });
-  } catch {
-    return;
-  }
-  emit("refreshPosts");
-};
-const getSaveNames = async () => {
-  let response;
-  try {
-    response = await fetchy(`/api/save/names`, "GET", {});
-    saveNames.value = response;
-  } catch {
-    return;
-  }
-  emit("refreshPosts");
-};
-
-getSaveNames();
 // Functions to navigate between images
 const nextImage = () => {
   if (currentImageIndex.value < props.post.content.length - 1) {
@@ -67,42 +44,48 @@ const prevImage = () => {
 </script>
 
 <template>
-  <div class="members-block">
-    Members:&nbsp;
-    <p class="members" v-for="(item, index) in props.post.approvers" :key="index" :style="{ color: props.post.approved.includes(item) ? 'green' : 'inherit' }">
-      {{ item }}<span v-if="index < props.post.approvers.length - 1">,</span>
-    </p>
-  </div>
-
-  <p>Theme: {{ props.post.theme }}</p>
-
-  <div class="image-container">
-    <div class="image-slider">
-      <!-- Add smaller, transparent overlay buttons -->
-      <button class="nav-button prev" @click="prevImage" v-if="currentImageIndex > 0">&lt;</button>
-      <!-- Show current image -->
-      <img class="square-image" :src="props.post.content[currentImageIndex]" alt="Image description" />
-      <button class="nav-button next" @click="nextImage" v-if="currentImageIndex < props.post.content.length - 1">&gt;</button>
-    </div>
-  </div>
-
   <div class="base">
-    <article v-if="props.post.approvers.map(String).includes(String(currentUsername))" class="button-menu">
-      <button v-if="!props.post.approved.map(String).includes(String(currentUsername))" class="btn-small pure-button" @click="approvePost">Approve</button>
-      <button class="btn-small pure-button" @click="emit('setTheme', props.post._id)">Set Theme</button>
-      <button class="button-error btn-small pure-button" @click="deletePost">Delete</button>
-    </article>
+    <div class="members-block">
+      Members:&nbsp;
+      <p class="members" v-for="(item, index) in props.post.approvers" :key="index" :style="{ color: props.post.approved.includes(item) ? 'green' : 'inherit' }">
+        {{ item }}<span v-if="index < props.post.approvers.length - 1">,</span>
+      </p>
+    </div>
+    <h4>Theme: {{ props.post.theme }}</h4>
 
-    <div>
-      <button class="btn-small pure-button" @click="showDropdown = !showDropdown"><i class="fas fa-bookmark"></i></button>
-      <!-- Toggle dropdown visibility -->
-      <div v-if="showDropdown">
-        <select v-model="selectedName" @change="savePost">
-          <option disabled value="">Select a save label</option>
-          <option v-for="(name, index) in saveNames" :key="index" :value="name">{{ name }}</option>
-        </select>
+    <div class="image-container">
+      <div class="image-slider">
+        <!-- Add smaller, transparent overlay buttons -->
+        <button class="nav-button prev" @click="prevImage" v-if="currentImageIndex > 0">&lt;</button>
+        <!-- Show current image -->
+        <img class="square-image" :src="props.post.content[currentImageIndex]" alt="Image description" />
+        <button class="nav-button next" @click="nextImage" v-if="currentImageIndex < props.post.content.length - 1">&gt;</button>
       </div>
     </div>
+
+    <div class="buttons">
+      <article v-if="props.post.approvers.map(String).includes(String(currentUsername))" class="button-menu">
+        <!-- Group for the first two buttons (left) -->
+        <div class="button-group-left">
+          <button v-if="!props.post.approved.map(String).includes(String(currentUsername))" class="btn-small pure-button green" @click="approvePost">
+            <i class="fas fa-check"></i>
+          </button>
+          <button class="button-error btn-small pure-button" @click="deletePost">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+        <!-- Group for the second two buttons (right) -->
+        <div class="button-group-right">
+          <button class="btn-small pure-button" @click="emit('setTheme', props.post._id)">
+            <i class="fas fa-palette"></i>
+          </button>
+          <button class="btn-small pure-button" @click="emit('savePost', props.post._id)">
+            <i class="fas fa-bookmark"></i>
+          </button>
+        </div>
+      </article>
+    </div>
+
     <article class="timestamp">
       <p v-if="props.post.dateCreated !== props.post.dateUpdated">{{ formatDate(props.post.dateUpdated) }}</p>
       <p v-else>{{ formatDate(props.post.dateCreated) }}</p>
@@ -110,8 +93,12 @@ const prevImage = () => {
   </div>
 </template>
 <style scoped>
+.base {
+  padding: 5%;
+}
+
 p {
-  margin: 0em;
+  padding: 0em;
 }
 
 .members-block {
@@ -119,7 +106,6 @@ p {
   flex-wrap: wrap;
   font-weight: bold;
   font-size: 1.2em;
-  margin-right: 5px;
 }
 
 .members {
@@ -127,11 +113,13 @@ p {
   margin-right: 5px;
 }
 
+h4 {
+  margin-bottom: 1em;
+}
+
 .image-container {
   position: relative;
   width: 100%;
-  max-width: 600px; /* Adjust max-width as needed */
-  margin: 0 auto; /* Center the image container */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -199,19 +187,39 @@ p {
 
 .button-menu {
   display: flex;
-  flex-direction: row;
-  gap: 0.3em;
-  align-items: flex-start;
+  justify-content: space-between; /* Ensures space between button groups */
+  width: 100%; /* Make sure the button container spans the full width */
 }
-
-.base {
+.buttons {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.5em;
+  margin-top: 5%;
+  font-size: 1.5em;
 }
 
+.button-group-left,
+.button-group-right {
+  display: flex;
+  gap: 0.3em; /* Add some space between the buttons */
+}
+
+.button-group-left {
+  justify-content: flex-start; /* Aligns the first group to the left */
+}
+
+.button-group-right {
+  justify-content: flex-end; /* Aligns the second group to the right */
+  margin-left: auto; /* Pushes the right group to the right side */
+}
 article {
-  gap: 1em;
+  gap: 5%;
+}
+
+i {
+  margin: 0; /* Remove margins around the icon */
+  padding: 0;
+  gap: 0;
 }
 </style>

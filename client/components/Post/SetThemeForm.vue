@@ -1,14 +1,49 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { fetchy } from "../../utils/fetchy";
-import { formatDate } from "../../utils/formatDate";
 
 // Props and Emits
 const props = defineProps(["post"]);
 const emit = defineEmits(["setTheme", "refreshPosts"]);
 
 // Reactive references
-const theme = ref("");
+const themes = [
+  "event",
+  "news",
+  "music",
+  "theatre",
+  "art",
+  "sports",
+  "food",
+  "fashion",
+  "technology",
+  "politics",
+  "science",
+  "health",
+  "education",
+  "travel",
+  "lifestyle",
+  "television",
+  "film",
+  "literature",
+  "comics",
+  "games",
+  "hobbies",
+  "crafts",
+  "pets",
+  "gardening",
+  "sports",
+];
+
+// Reactive references
+const selectedTheme = ref(""); // Reactive reference for the selected user
+let users = ref<Array<Record<string, string>>>([]);
+const searchTerm = ref("");
+
+// Function to select a user
+const selectTheme = (theme: string) => {
+  selectedTheme.value = theme; // Set the selected user
+};
 
 // Function to add a member
 const setTheme = async (theme: string) => {
@@ -21,52 +56,37 @@ const setTheme = async (theme: string) => {
   emit("setTheme");
   emit("refreshPosts");
 };
+
+// Function to cancel selection
+const cancelSelection = () => {
+  selectedTheme.value = ""; // Clear the selected user
+  searchTerm.value = ""; // Clear the search term
+  emit("setTheme");
+  emit("refreshPosts");
+};
+
+// Computed filtered list of users based on search term
+const filteredThemes = computed(() => {
+  return themes.filter(
+    (theme) => theme && theme.toString().toLowerCase().includes(searchTerm.value.toLowerCase()), // Ensure username is defined
+  );
+});
 </script>
 
 <template>
-  <form @submit.prevent="setTheme(theme)">
-    <textarea v-model="theme" id="theme" placeholder="Set Theme" required></textarea>
-    <div class="base">
-      <menu>
-        <li><button class="btn-small pure-button-primary pure-button" type="submit">Set</button></li>
-        <li><button class="btn-small pure-button" @click="emit('setTheme')">Cancel</button></li>
-      </menu>
-      <p v-if="props.post.dateCreated !== props.post.dateUpdated" class="timestamp">Edited on: {{ formatDate(props.post.dateUpdated) }}</p>
-      <p v-else class="timestamp">Created on: {{ formatDate(props.post.dateCreated) }}</p>
-    </div>
-  </form>
+  <div class="page">
+    <h3>Themes</h3>
+    <input v-model="searchTerm" id="theme" placeholder="Search available themes" />
+    <ul v-if="filteredThemes.length > 0" class="item-list">
+      <button v-for="theme in filteredThemes.slice(0, 6)" :key="theme" class="btn-small pure-button" :class="{ selected: selectedTheme === theme.toString() }" @click="selectTheme(theme.toString())">
+        {{ theme }}
+      </button>
+    </ul>
+    <form @submit.prevent="setTheme(selectedTheme)">
+      <li><button class="btn-small pure-button primary" type="submit" :disabled="!selectedTheme">Set</button></li>
+      <li><button type="button" class="btn-small pure-button" @click="cancelSelection">Cancel</button></li>
+    </form>
+  </div>
 </template>
 
-<style scoped>
-p {
-  margin: 0em;
-}
-
-.members {
-  font-weight: bold;
-  font-size: 1.2em;
-}
-
-.theme {
-  list-style-type: none;
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-  padding: 0;
-  margin: 0;
-}
-menu {
-  list-style-type: none;
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-  padding: 0;
-  margin: 0;
-}
-
-.base {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-</style>
+<style scoped></style>
