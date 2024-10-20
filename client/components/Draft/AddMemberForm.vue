@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import UserDoc from "server/concepts/authenticating.ts";
 import { computed, onMounted, ref } from "vue";
 import { fetchy } from "../../utils/fetchy";
 // Props and Emits
@@ -15,7 +14,7 @@ const searchTerm = ref("");
 const getUsers = async () => {
   try {
     let usersResults = await fetchy(`/api/users`, "GET", {});
-    users.value = usersResults.map((user: UserDoc) => user.username);
+    users.value = usersResults.map((user: any) => user.username);
   } catch (e) {
     console.log("error");
     console.log(e);

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ThemeListCom
+import ThemeListComponent from "@/components/Post/ThemeListComponent.vue";
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 
