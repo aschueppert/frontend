@@ -3,8 +3,8 @@ import { useUserStore } from "@/stores/user";
 import { fetchy } from "@/utils/fetchy";
 import { storeToRefs } from "pinia";
 import { onBeforeMount, ref } from "vue";
-import AddMemberForm from "../Draft/AddMemberForm.vue";
 import FollowComponent from "./FollowComponent.vue";
+import FollowUserForm from "./FollowUserForm.vue";
 const { isLoggedIn } = storeToRefs(useUserStore());
 
 const loaded = ref(false);
@@ -29,9 +29,9 @@ onBeforeMount(async () => {
 
 <template>
   <!-- Section displaying the list of accounts following -->
-  <section class="page" v-if="isLoggedIn">
+  <main v-if="isLoggedIn">
     <h2>Follow User:</h2>
-    <AddMemberForm @refreshDrafts="getFollowing" />
+    <FollowUserForm @refreshFollows="getFollowing" />
     <h2>Following</h2>
     <section v-if="loaded && following.length !== 0">
       <article v-for="follow in following" :key="follow._id">
@@ -46,31 +46,11 @@ onBeforeMount(async () => {
 
     <!-- Loading message -->
     <p v-else>Loading...</p>
-  </section>
+  </main>
 </template>
 
 <style scoped>
 .items {
   padding: 0.5em; /* Padding withing blue borders */
-}
-
-section,
-p {
-  margin: 0 auto;
-}
-
-article {
-  background-color: var(--base-bg);
-  border-radius: 1em;
-  display: flex;
-  flex-direction: column;
-  border: 3px solid var(--base-border);
-  margin-bottom: 1em;
-  margin-top: 1em;
-}
-
-.page {
-  padding: 1em; /*not right along edge*/
-  gap: 1em;
 }
 </style>

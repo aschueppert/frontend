@@ -61,7 +61,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="page">
+  <main>
     <h3>Save Names</h3>
     <input v-model="searchTerm" id="name" placeholder="Search available saved group names" />
     <ul v-if="filteredNames.length > 0" class="item-list">
@@ -73,7 +73,7 @@ onMounted(async () => {
       <li><button class="btn-small pure-button primary" type="submit" :disabled="!selectedName">Set</button></li>
       <li><button type="button" class="btn-small pure-button" @click="cancelSelection">Cancel</button></li>
     </form>
-  </div>
+  </main>
 </template>
 
 <style scoped></style>

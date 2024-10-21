@@ -47,14 +47,6 @@ onBeforeMount(async () => {
   position: relative; /* Set this to relative to contain absolutely positioned elements */
   overflow: hidden;
 }
-article {
-  background-color: var(--base-bg);
-  border-radius: 1em;
-  display: flex;
-  flex-direction: column;
-  border: 3px solid var(--yellow);
-  margin: 1em;
-}
 .approved {
   border-color: var(--green);
 }

@@ -124,15 +124,16 @@ class Routes {
    * @param theme - The theme of the posts
    * @returns posts - The posts from the theme.
    * */
-  @Router.get("/themes")
+  @Router.get("/themes/:theme")
   async getThemePosts(session: SessionDoc, theme: string) {
+    console.log(theme);
     const user = Sessioning.getUser(session);
     const relationships = await Following.getFollowing(user);
     const following = relationships.map((r) => r.following);
     let theme_posts = await Posting.getByTheme(theme);
     theme_posts = theme_posts.filter((post) => post.approvers.some((member) => following.map(String).includes(String(member))));
-    theme_posts = theme_posts.filter((post) => post.status == "approved");
-    return theme_posts;
+    theme_posts = theme_posts.filter((post) => post.status == "Approved");
+    return Responses.posts(theme_posts);
   }
 
   /**
@@ -236,6 +237,7 @@ class Routes {
    */
   @Router.post("/events")
   async createEvent(session: SessionDoc, post_id: string, location: string) {
+    console.log(post_id);
     const user = Sessioning.getUser(session);
     const post_oid = new ObjectId(post_id);
     await Posting.assertUserIsApprover(post_oid, user);

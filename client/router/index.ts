@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import { useUserStore } from "@/stores/user";
 import DraftsView from "../views/DraftsView.vue";
+import EventsView from "../views/EventsView.vue";
 import FollowingView from "../views/FollowingView.vue";
 import HomeView from "../views/HomeView.vue";
 import ImagesView from "../views/ImagesView.vue";
@@ -11,6 +12,7 @@ import NotFoundView from "../views/NotFoundView.vue";
 import ProfileView from "../views/ProfileView.vue";
 import SavedView from "../views/SavedView.vue";
 import SettingView from "../views/SettingView.vue";
+import ThemeView from "../views/ThemeView.vue";
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -45,6 +47,11 @@ const router = createRouter({
       component: ImagesView,
     },
     {
+      path: "/events",
+      name: "Events",
+      component: EventsView,
+    },
+    {
       path: "/setting",
       name: "Settings",
       component: SettingView,
@@ -62,6 +69,12 @@ const router = createRouter({
           return { name: "Settings" };
         }
       },
+    },
+    {
+      path: "/theme/:themeName",
+      name: "Theme",
+      component: ThemeView,
+      props: true, // This allows route params to be passed as props
     },
     {
       path: "/:catchAll(.*)",

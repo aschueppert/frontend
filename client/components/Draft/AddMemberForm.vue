@@ -64,7 +64,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="page">
+  <main>
     <input v-model="searchTerm" placeholder="Search for a user" />
     <!-- Display the filtered list of users -->
     <ul v-if="filteredUsers.length > 0" class="item-list">
@@ -81,7 +81,7 @@ onMounted(async () => {
       </li>
       <li><button type="button" class="btn-small pure-button" @click="cancelSelection">Cancel</button></li>
     </form>
-  </div>
+  </main>
 </template>
 
 <style scoped>

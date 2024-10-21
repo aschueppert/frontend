@@ -26,38 +26,66 @@ const convertDraft = async () => {
   }
   emit("refreshDrafts");
 };
-</script>
 
+// Function to select content
+const selectContent = async (content: string) => {
+  if (props.draft.selectedSet.includes(content)) {
+    try {
+      await fetchy(`/api/drafts/deselect/${props.draft._id}`, "PATCH", { body: { id: props.draft._id, content: content } });
+    } catch (e) {
+      console.log(e);
+      return;
+    }
+  } else {
+    try {
+      await fetchy(`/api/drafts/select/${props.draft._id}`, "PATCH", { body: { id: props.draft._id, content: content } });
+    } catch (e) {
+      console.log(e);
+      return;
+    }
+  }
+  emit("refreshDrafts");
+};
+</script>
 <template>
   <!-- Memeber-->
-  <div class="page">
-    <p class="members">Members: {{ props.draft.members.join(", ") }} <button class="btn-small pure-button" @click="emit('addMember', props.draft._id)">+</button></p>
+  <main>
+    <div class="members-row">
+      <p class="members">Members: {{ props.draft.members.join(", ") }}</p>
+      <button class="btn-small pure-button add-member" @click="emit('addMember', props.draft._id)">+</button>
+    </div>
 
     <!-- Content-->
     <div class="image-container">
       <p v-for="(item, index) in props.draft.contentSet" :key="index">
-        <button class="btn-small pure-button" :class="{ selected: props.draft.selectedSet.includes(item) }">
-          <img class="square-image" :src="item" alt="Image description" />
+        <button :class="['btn-small pure-button', props.draft.selectedSet.includes(item) ? 'selected' : 'unselected']" @click="selectContent(item)">
+          <img :src="item" alt="Image description" class="square-image" />
         </button>
       </p>
       <p><button class="btn-small pure-button" id="add" @click="emit('addContent', props.draft._id)">+</button></p>
     </div>
 
     <!-- Edit-->
-    <menu v-if="props.draft.members.map(String).includes(String(currentUsername))" class="button-menu">
-      <li><button class="btn-small pure-button item" @click="emit('selectContent', props.draft._id)">Select Content</button></li>
+    <menu class="button-menu">
       <li><button class="btn-small pure-button item" @click="convertDraft">Post</button></li>
       <li><button class="button-error btn-small pure-button item" @click="deleteDraft">Delete</button></li>
     </menu>
-    <article class="timestamp">
+    <div class="timestamp">
       <p v-if="props.draft.dateCreated !== props.draft.dateUpdated">{{ formatDate(props.draft.dateUpdated) }}</p>
       <p v-else>{{ formatDate(props.draft.dateCreated) }}</p>
-    </article>
-  </div>
+    </div>
+  </main>
 </template>
 <style scoped>
 p {
   gap: 0em;
+}
+
+.members-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5em; /* Small gap between text and button */
+  padding-bottom: 1em;
 }
 
 .members {
@@ -65,9 +93,6 @@ p {
   font-size: 1.2em;
 }
 
-.page {
-  padding: 0.5em;
-}
 menu {
   list-style-type: none;
   display: flex;
@@ -76,11 +101,20 @@ menu {
 }
 
 #add {
-  height: 113px; /* Match this with image button size */
-  width: 100px; /* Match this with image button size */
+  height: 120px; /* Match this with image button size */
+  width: 120px; /* Match this with image button size */
   font-size: 60px; /* You might want to adjust this for better fit */
+  display: flex;
+  justify-content: center;
   align-items: center;
-  object-fit: cover;
+}
+
+.add-member {
+  width: 5em;
+  height: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .image-container {

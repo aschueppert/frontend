@@ -74,7 +74,7 @@ const filteredThemes = computed(() => {
 </script>
 
 <template>
-  <div class="page">
+  <main>
     <h3>Themes</h3>
     <input v-model="searchTerm" id="theme" placeholder="Search available themes" />
     <ul v-if="filteredThemes.length > 0" class="item-list">
@@ -86,7 +86,7 @@ const filteredThemes = computed(() => {
       <li><button class="btn-small pure-button primary" type="submit" :disabled="!selectedTheme">Set</button></li>
       <li><button type="button" class="btn-small pure-button" @click="cancelSelection">Cancel</button></li>
     </form>
-  </div>
+  </main>
 </template>
 
 <style scoped></style>

@@ -24,10 +24,20 @@ const emptyForm = () => {
 </script>
 
 <template>
+  <textarea id="name" v-model="name" placeholder="Create a Draft!" required> </textarea>
   <form @submit.prevent="createDraft(name)">
-    <textarea id="name" v-model="name" placeholder="Create a Draft!" required> </textarea>
     <button type="submit" class="btn-small pure-button primary">Create</button>
   </form>
 </template>
 
-<style scoped></style>
+<style scoped>
+form {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+</style>

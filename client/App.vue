@@ -63,6 +63,9 @@ onBeforeMount(async () => {
           <RouterLink :to="{ name: 'Following' }"><i class="fas fa-heart"></i></RouterLink>
         </li>
         <li>
+          <RouterLink :to="{ name: 'Events' }"><p>E</p></RouterLink>
+        </li>
+        <li>
           <RouterLink :to="{ name: 'Images' }"><i class="fas fa-camera photo-icon"></i></RouterLink>
         </li>
       </ul>
