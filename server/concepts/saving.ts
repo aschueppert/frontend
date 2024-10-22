@@ -52,8 +52,8 @@ export default class SaveConcept {
     return save;
   }
 
-  async getNames() {
-    const names = await this.saved.readMany({}, { sort: { _id: -1 } });
+  async getNames(author: ObjectId) {
+    const names = await this.saved.readMany({ author });
     return names.map((item) => item.name);
   }
 

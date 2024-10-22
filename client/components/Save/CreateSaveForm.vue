@@ -24,7 +24,7 @@ const emptyForm = () => {
 </script>
 
 <template>
-  <textarea id="name" v-model="name" placeholder="Create a Save Label!" required> </textarea>
+  <input id="name" v-model="name" placeholder="Create a Save Label!" required />
   <form @submit.prevent="createSave(name)">
     <button type="submit" class="btn-small pure-button primary">Create</button>
   </form>

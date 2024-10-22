@@ -115,8 +115,9 @@ class Routes {
   }
 
   @Router.get("/save/names")
-  async getSavedNames() {
-    return await Saving.getNames();
+  async getSavedNames(session: SessionDoc) {
+    const user = Sessioning.getUser(session);
+    return await Saving.getNames(user);
   }
   /**
    * Gets approved posts from a specific theme from people the user follows.

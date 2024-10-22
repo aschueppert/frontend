@@ -17,7 +17,8 @@ const createEvent = async (location: string) => {
 
 <template>
   <main>
-    <textarea v-model="location" placeholder="Add Location" />
+    <h3>Create Event:</h3>
+    <input v-model="location" placeholder="Add Location" />
     <form @submit.prevent="createEvent(location)">
       <li>
         <button class="btn-small pure-button-primary pure-button primary" type="submit" id="submit">Create</button>

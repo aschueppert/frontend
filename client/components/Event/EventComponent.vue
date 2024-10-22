@@ -9,7 +9,7 @@ let post = ref({ content: [] }); // Initialize post with a default structure
 
 const rsvp = async () => {
   try {
-    await fetchy(`/api/events/rsvp/${props.event._id}`, "POST");
+    await fetchy(`/api/events/rsvp/${props.event._id}`, "PATCH", { body: { event_id: props.event._id } });
   } catch (e) {
     return;
   }

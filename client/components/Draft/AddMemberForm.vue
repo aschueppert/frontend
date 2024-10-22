@@ -61,6 +61,7 @@ onMounted(async () => {
 
 <template>
   <main>
+    <h3>Add member:</h3>
     <input v-model="searchTerm" placeholder="Search for a user" />
     <!-- Display the filtered list of users -->
     <ul v-if="filteredUsers.length > 0" class="item-list">

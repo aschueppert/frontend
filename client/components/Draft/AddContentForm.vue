@@ -25,7 +25,8 @@ const addContent = async (name: string) => {
 
 <template>
   <main>
-    <textarea v-model="name" id="name" placeholder="Add Content" required></textarea>
+    <h3>Add Content:</h3>
+    <input v-model="name" id="name" placeholder="Add Content" required />
     <form @submit.prevent="addContent(name)">
       <li><button class="btn-small pure-button-primary pure-button" type="submit" id="submit">Add</button></li>
       <li><button class="btn-small pure-button" @click="emit('addContent')">Cancel</button></li>

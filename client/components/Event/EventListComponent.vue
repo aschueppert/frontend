@@ -21,14 +21,6 @@ async function getEvents() {
   }
 }
 
-async function rsvp() {
-  try {
-    await fetchy("/api/events/rsvp", "POST", {});
-  } catch (e) {
-    console.log(e);
-    return;
-  }
-}
 onBeforeMount(async () => {
   await getEvents();
   loaded.value = true;
@@ -39,7 +31,7 @@ onBeforeMount(async () => {
   <section v-if="isLoggedIn">
     <section v-if="loaded && events.length !== 0">
       <article v-for="event in events" :key="event._id">
-        <EventComponent :event="event" />
+        <EventComponent :event="event" @refreshEvents="getEvents" />
       </article>
     </section>
     <p v-else-if="loaded">No Events found</p>

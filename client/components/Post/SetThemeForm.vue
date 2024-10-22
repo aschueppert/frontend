@@ -75,7 +75,7 @@ const filteredThemes = computed(() => {
 
 <template>
   <main>
-    <h3>Themes</h3>
+    <h3>Set Theme:</h3>
     <input v-model="searchTerm" id="theme" placeholder="Search available themes" />
     <ul v-if="filteredThemes.length > 0" class="item-list">
       <button v-for="theme in filteredThemes.slice(0, 6)" :key="theme" class="btn-small pure-button" :class="{ selected: selectedTheme === theme.toString() }" @click="selectTheme(theme.toString())">

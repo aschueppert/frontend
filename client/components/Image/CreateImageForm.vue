@@ -26,9 +26,9 @@ const emptyForm = () => {
 </script>
 
 <template>
+  <input id="url" v-model="url" placeholder="Image URL" required />
+  <input id="name" v-model="name" placeholder="Image Name" required />
   <form @submit.prevent="createImage(url, name)">
-    <textarea id="url" v-model="url" placeholder="Image URL" required> </textarea>
-    <textarea id="name" v-model="name" placeholder="Image Name" required> </textarea>
     <button type="submit" class="pure-button-primary pure-button" id="submit">Create Image</button>
   </form>
 </template>

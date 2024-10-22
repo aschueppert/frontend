@@ -5,17 +5,8 @@ console.log(props.image.url);
 </script>
 
 <template>
-  <p>Name: {{ props.image.name }}</p>
+  <h3>{{ props.image.name }}</h3>
   <img :src="props.image.url" alt="image" class="square-image" />
 </template>
 
-<style scoped>
-p {
-  margin: 0em;
-}
-.square-image {
-  width: 100px;
-  height: 100px;
-  object-fit: cover; /* Ensures the image fills the square without distortion */
-}
-</style>
+<style scoped></style>

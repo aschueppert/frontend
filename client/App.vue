@@ -37,12 +37,14 @@ onBeforeMount(async () => {
       <div class="top-nav">
         <ul>
           <li>
-            <RouterLink :to="{ name: 'Posts' }"> <i class="fas fa-camera photo-icon"></i> </RouterLink>
+            <RouterLink :to="{ name: 'Posts' }"> <i class="fas fa-user"></i></RouterLink>
           </li>
           <li v-if="isLoggedIn">
             <RouterLink :to="{ name: 'Settings' }"><i class="fas fa-cog settings-icon"></i></RouterLink>
           </li>
-          <li v-else><RouterLink :to="{ name: 'Login' }" :class="{ underline: currentRouteName == 'Login' }">Login</RouterLink></li>
+          <li v-else>
+            <RouterLink :to="{ name: 'Login' }"><i class="fas fa-sign-in-alt"></i></RouterLink>
+          </li>
         </ul>
       </div>
     </div>
