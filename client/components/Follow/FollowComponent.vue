@@ -32,18 +32,11 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%; /* Or adjust the width as needed */
+  width: 100%;
   padding: 0.5em; /* Add padding for spacing */
-  box-sizing: border-box; /* Include padding and border in width calculation */
 }
 .following {
   font-weight: bold;
   font-size: 1.2em;
-}
-
-button {
-  white-space: nowrap; /* Prevent button text from wrapping */
-  padding: 0.5em 1em; /* Ensure the button has proper padding */
-  font-size: 1em;
 }
 </style>

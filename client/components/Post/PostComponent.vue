@@ -41,13 +41,13 @@ const approvePost = async () => {
 
     <ScrollComponent :content="props.post.content" />
 
-    <div v-if="props.post.approvers.map(String).includes(String(currentUsername))" class="button-container">
-      <div class="button-group">
+    <menu class="separate" v-if="props.post.approvers.map(String).includes(String(currentUsername))">
+      <menu>
         <button v-if="!props.post.approved.map(String).includes(String(currentUsername))" class="btn-small pure-button green" @click="approvePost">
           <i class="fas fa-check"></i>
         </button>
         <button class="btn-small pure-button" @click="emit('createEvent', props.post._id)">
-          <p>E</p>
+          <i class="fas fa-calendar"></i>
         </button>
         <button class="btn-small pure-button" @click="emit('setTheme', props.post._id)">
           <i class="fas fa-palette"></i>
@@ -55,14 +55,14 @@ const approvePost = async () => {
         <button class="button-error btn-small pure-button" @click="deletePost">
           <i class="fas fa-trash"></i>
         </button>
-      </div>
+      </menu>
 
-      <div class="button-group">
+      <menu>
         <button class="btn-small pure-button" @click="emit('savePost', props.post._id)">
           <i class="fas fa-bookmark"></i>
         </button>
-      </div>
-    </div>
+      </menu>
+    </menu>
 
     <div class="timestamp">
       <p>{{ formatDate(props.post.dateUpdated !== props.post.dateCreated ? props.post.dateUpdated : props.post.dateCreated) }}</p>
@@ -84,19 +84,5 @@ const approvePost = async () => {
 
 h4 {
   margin-bottom: 1em;
-}
-
-.button-container {
-  display: flex;
-  justify-content: space-between; /* Ensures space between button groups */
-  margin-top: 5%;
-  font-size: 1.5em;
-}
-
-.button-group {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 0.5em;
 }
 </style>

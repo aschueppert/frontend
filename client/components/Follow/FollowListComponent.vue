@@ -15,7 +15,6 @@ async function getFollowing() {
   try {
     followingResults = await fetchy("/api/follows", "GET", {});
   } catch (e) {
-    console.log(e);
     return;
   }
   following.value = followingResults;
@@ -35,22 +34,12 @@ onBeforeMount(async () => {
     <h2>Following</h2>
     <section v-if="loaded && following.length !== 0">
       <article v-for="follow in following" :key="follow._id">
-        <div class="items">
-          <FollowComponent :follow="follow" @refreshFollows="getFollowing" />
-        </div>
+        <FollowComponent :follow="follow" @refreshFollows="getFollowing" />
       </article>
     </section>
-
-    <!-- Message when no drafts are found -->
     <p v-else-if="loaded">Following no users</p>
-
-    <!-- Loading message -->
     <p v-else>Loading...</p>
   </main>
 </template>
 
-<style scoped>
-.items {
-  padding: 0.5em; /* Padding withing blue borders */
-}
-</style>
+<style scoped></style>

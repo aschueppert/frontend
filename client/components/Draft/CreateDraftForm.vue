@@ -30,14 +30,4 @@ const emptyForm = () => {
   </form>
 </template>
 
-<style scoped>
-form {
-  list-style-type: none;
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-}
-</style>
+<style scoped></style>

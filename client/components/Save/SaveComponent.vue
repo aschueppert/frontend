@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { fetchy } from "@/utils/fetchy";
 import { defineEmits, defineProps, onMounted, ref } from "vue";
-import PostComponent from "../Post/PostComponent.vue";
+import ScrollComponent from "../ScrollComponent.vue";
 // Props and emits
 const props = defineProps(["save"]);
 const emit = defineEmits(["refreshSaved"]);
@@ -34,24 +34,19 @@ onMounted(async () => {
 
 <template>
   <main>
-    <article v-for="item_id in props.save.items" :key="item_id" class="post-item">
-      <div v-if="items[item_id] !== undefined">
-        <PostComponent :post="items[item_id]" />
+    <div class="image-container">
+      <div v-for="item_id in props.save.items" :key="item_id" class="post-item">
+        <div v-if="items[item_id] !== undefined">
+          <ScrollComponent :content="items[item_id].content" />
+        </div>
+        <div v-else>Loading...</div>
       </div>
-      <div v-else>Loading...</div>
-    </article>
+    </div>
   </main>
 </template>
 
 <style scoped>
 .post-item {
-  flex: 0 1 calc(30% - 1em); /* Flex-grow: 0; Flex-shrink: 1; Flex-basis: 50% minus gap */
-}
-.page {
-  padding: 0.5em;
-  display: flex; /* Use Flexbox for layout */
-  flex-wrap: wrap; /* Allow items to wrap if necessary */
-  padding: 0; /* Remove any padding */
-  margin-left: 1em;
+  flex: 0 1 calc(50% - 1em); /* Flex-grow: 0; Flex-shrink: 1; Flex-basis: 50% minus gap */
 }
 </style>

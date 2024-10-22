@@ -10,8 +10,7 @@ let post = ref({ content: [] }); // Initialize post with a default structure
 const rsvp = async () => {
   try {
     await fetchy(`/api/events/rsvp/${props.event._id}`, "POST");
-  } catch (error) {
-    console.error("Error in RSVP:", error);
+  } catch (e) {
     return;
   }
   emit("refreshEvents");
@@ -21,9 +20,8 @@ const getPost = async () => {
   try {
     const response = await fetchy(`/api/post/${props.event.info}`, "GET");
     return response;
-  } catch (error) {
-    console.error("Error fetching post:", error);
-    return { content: [] }; // Return an empty structure if there's an error
+  } catch (e) {
+    return;
   }
 };
 
@@ -34,21 +32,12 @@ onBeforeMount(async () => {
 
 <template>
   <main>
-    <section>
-      <p>Hosts: {{ props.event.hosts.join(", ") }}</p>
-      <p>Attendees: {{ props.event.attendees.join(", ") }}</p>
-      <p>Location: {{ props.event.location }}</p>
-    </section>
-    <section>
-      <ScrollComponent :content="post.content" />
-    </section>
-
-    <button @click="rsvp">RSVP</button>
+    <h4>Hosts: {{ props.event.hosts.join(", ") }}</h4>
+    <h4>Attendees: {{ props.event.attendees.join(", ") }}</h4>
+    <h4>Location: {{ props.event.location }}</h4>
+    <ScrollComponent :content="post.content" />
+    <menu><button class="btn-small pure-button" @click="rsvp">RSVP</button></menu>
   </main>
 </template>
 
-<style scoped>
-main {
-  padding: 5%;
-}
-</style>
+<style scoped></style>

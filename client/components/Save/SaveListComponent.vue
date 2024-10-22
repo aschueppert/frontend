@@ -62,7 +62,6 @@ section {
   display: flex;
   flex-direction: column;
   gap: 0.5em;
-  padding-left: 1em; /* Add left padding to the section */
-  padding-right: 1em; /* Add right padding for symmetry */
+  padding: 0 1em;
 }
 </style>

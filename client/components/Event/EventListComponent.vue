@@ -37,30 +37,14 @@ onBeforeMount(async () => {
 
 <template>
   <section v-if="isLoggedIn">
-    <h2>Drafts:</h2>
+    <section v-if="loaded && events.length !== 0">
+      <article v-for="event in events" :key="event._id">
+        <EventComponent :event="event" />
+      </article>
+    </section>
+    <p v-else-if="loaded">No Events found</p>
+    <p v-else>Loading...</p>
   </section>
-
-  <section v-if="loaded && events.length !== 0">
-    <article v-for="event in events" :key="event._id">
-      <EventComponent :event="event" />
-    </article>
-  </section>
-
-  <!-- Message when no drafts are found -->
-  <section v-else-if="loaded">No Events found</section>
-
-  <!-- Loading message -->
-  <section v-else>Loading...</section>
 </template>
 
-<style scoped>
-article {
-  position: relative;
-  background-color: var(--base-bg);
-  border: 3px solid var(--base-border);
-  border-radius: 1em;
-  margin: 1em;
-  display: flex;
-  flex-direction: column;
-}
-</style>
+<style scoped></style>

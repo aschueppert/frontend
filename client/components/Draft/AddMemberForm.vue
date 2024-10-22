@@ -16,8 +16,6 @@ const getUsers = async () => {
     let usersResults = await fetchy(`/api/users`, "GET", {});
     users.value = usersResults.map((user: any) => user.username);
   } catch (e) {
-    console.log("error");
-    console.log(e);
     return;
   }
   emit("refreshDrafts");
@@ -34,8 +32,6 @@ const addMember = async (user: string) => {
   try {
     await fetchy(`/api/drafts/${props.draft._id}`, "PATCH", { body: { id: props.draft._id, member: user } });
   } catch (e) {
-    console.log("error");
-    console.log(e);
     return;
   }
   emit("addMember");
@@ -76,9 +72,7 @@ onMounted(async () => {
     <p v-else>No users found</p>
 
     <form @submit.prevent="addMember(selectedUser)">
-      <li>
-        <button class="btn-small pure-button-primary pure-button primary" type="submit" id="submit" :disabled="!selectedUser">Add</button>
-      </li>
+      <li><button class="btn-small pure-button primary" type="submit" id="submit" :disabled="!selectedUser">Add</button></li>
       <li><button type="button" class="btn-small pure-button" @click="cancelSelection">Cancel</button></li>
     </form>
   </main>
@@ -88,18 +82,9 @@ onMounted(async () => {
 .item-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.5em; /* Adjust gap between user items */
+  gap: 0.5em;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
   list-style-type: none;
-}
-
-form {
-  list-style-type: none;
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-  padding: 0;
-  margin: 0;
 }
 </style>

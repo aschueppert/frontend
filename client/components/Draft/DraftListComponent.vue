@@ -77,36 +77,8 @@ onBeforeMount(async () => {
 section {
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 0.5em;
   padding: 0 1em;
-}
-
-.overlap-container {
-  position: relative;
-  overflow: hidden;
-}
-
-.overlay-form,
-.overlay {
-  position: absolute;
-  width: 100%;
-  border-radius: 1em;
-}
-
-.overlay-form {
-  bottom: 0;
-  z-index: 10;
-  height: 60%;
-  background-color: white;
-  padding: 1em;
-}
-
-.overlay {
-  top: 0;
-  left: 0;
-  height: 100%;
-  background-color: rgba(128, 128, 128, 0.5);
-  z-index: 5;
 }
 
 .drafts {

@@ -50,23 +50,24 @@ const selectContent = async (content: string) => {
 <template>
   <!-- Memeber-->
   <main>
-    <div class="members-row">
-      <p class="members">Members: {{ props.draft.members.join(", ") }}</p>
+    <div class="members">
+      <p>Members: {{ props.draft.members.join(", ") }}</p>
       <button class="btn-small pure-button add-member" @click="emit('addMember', props.draft._id)">+</button>
     </div>
 
     <!-- Content-->
-    <div class="image-container">
-      <p v-for="(item, index) in props.draft.contentSet" :key="index">
-        <button :class="['btn-small pure-button', props.draft.selectedSet.includes(item) ? 'selected' : 'unselected']" @click="selectContent(item)">
-          <img :src="item" alt="Image description" class="square-image" />
-        </button>
-      </p>
-      <p><button class="btn-small pure-button" id="add" @click="emit('addContent', props.draft._id)">+</button></p>
+    <div class="center-container">
+      <div class="image-container">
+        <p v-for="(item, index) in props.draft.contentSet" :key="index">
+          <button :class="['btn-small pure-button', props.draft.selectedSet.includes(item) ? 'selected' : 'unselected']" @click="selectContent(item)">
+            <img :src="item" alt="Image description" class="square-image" />
+          </button>
+        </p>
+        <p><button class="btn-small pure-button" id="add" @click="emit('addContent', props.draft._id)">+</button></p>
+      </div>
     </div>
-
     <!-- Edit-->
-    <menu class="button-menu">
+    <menu>
       <li><button class="btn-small pure-button item" @click="convertDraft">Post</button></li>
       <li><button class="button-error btn-small pure-button item" @click="deleteDraft">Delete</button></li>
     </menu>
@@ -81,23 +82,13 @@ p {
   gap: 0em;
 }
 
-.members-row {
+.members {
   display: flex;
   align-items: center;
   gap: 0.5em; /* Small gap between text and button */
   padding-bottom: 1em;
-}
-
-.members {
   font-weight: bold;
   font-size: 1.2em;
-}
-
-menu {
-  list-style-type: none;
-  display: flex;
-  flex-direction: row;
-  gap: 0.5em; /* Reduced gap between buttons */
 }
 
 #add {
@@ -116,15 +107,9 @@ menu {
   justify-content: center;
   align-items: center;
 }
-
-.image-container {
-  margin-bottom: 1em;
-}
-
-.base {
+.center-container {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1em;
+  justify-content: center;
+  align-items: center;
 }
 </style>

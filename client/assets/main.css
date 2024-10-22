@@ -92,7 +92,14 @@ a.button {
 .image-container {
   display: flex; /* Use flexbox for layout */
   flex-wrap: wrap; /* Allow items to wrap if needed */
-  gap: 10px; /* Space between images */
+  gap: 1em;
+  justify-content: flex-start;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 textarea {
@@ -128,28 +135,6 @@ input {
   list-style-type: none;
 }
 
-.overlay {
-  position: absolute; /* Position absolute to cover the article */
-  top: 0; /* Align to the top */
-  left: 0; /* Align to the left */
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  background-color: rgba(128, 128, 128, 0.5); /* Translucent grey */
-  /*border-radius: 1em;*/
-  z-index: 5; /* Position below the overlay form but above other content */
-}
-
-.overlay-form {
-  position: absolute; /* Position relative to the nearest positioned ancestor */
-  bottom: 0; /* Align at the bottom */
-  z-index: 10; /* Ensure it appears above other content */
-  height: 60%;
-  width: 100%;
-  background-color: white; /* Background for visibility */
-  padding: 1em;
-  /*border-radius: 1em;*/
-}
-
 form {
   list-style-type: none;
   display: flex;
@@ -159,7 +144,13 @@ form {
 
 h3 {
   text-align: center;
+  margin-top: 0.5em;
   margin-bottom: 0.5em;
+}
+
+h2 {
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
 }
 
 article {
@@ -167,11 +158,53 @@ article {
   background-color: var(--base-bg);
   border: 3px solid var(--base-border);
   border-radius: 1em;
-  margin: 1em;
   display: flex;
   flex-direction: column;
+  margin-bottom: 1em;
 }
 
 main {
   padding: 5%;
+}
+
+.overlap-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay-form,
+.overlay {
+  position: absolute;
+  width: 100%;
+  border-radius: 1em;
+}
+
+.overlay-form {
+  bottom: 0;
+  z-index: 10;
+  height: 60%;
+  background-color: white;
+  padding: 1em;
+}
+
+.overlay {
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: rgba(128, 128, 128, 0.5);
+  z-index: 5;
+}
+
+menu {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  margin-top: 5%;
+}
+
+menu.separate {
+  justify-content: space-between;
+  font: 2em;
+  margin-top: 0;
 }

@@ -22,9 +22,7 @@ const prevImage = () => {
 <template>
   <div class="image-container">
     <div class="image-slider">
-      <!-- Add smaller, transparent overlay buttons -->
       <button class="nav-button prev" @click="prevImage" v-if="currentImageIndex > 0">&lt;</button>
-      <!-- Show current image -->
       <img class="square-image" :src="props.content[currentImageIndex]" alt="Image description" />
       <button class="nav-button next" @click="nextImage" v-if="currentImageIndex < props.content.length - 1">&gt;</button>
     </div>
