@@ -2,13 +2,13 @@
 import { ref } from "vue";
 import { fetchy } from "../../utils/fetchy";
 
-const name = ref("");
+const url = ref("");
 const emit = defineEmits(["refreshDrafts"]);
 
-const createDraft = async (name: string) => {
+const createDraft = async (url: string) => {
   try {
     await fetchy("/api/drafts", "POST", {
-      body: { name },
+      body: { url },
     });
   } catch (e) {
     console.log(e);
@@ -19,13 +19,13 @@ const createDraft = async (name: string) => {
 };
 
 const emptyForm = () => {
-  name.value = "";
+  url.value = "";
 };
 </script>
 
 <template>
-  <input id="name" v-model="name" placeholder="Create a Draft!" required />
-  <form @submit.prevent="createDraft(name)">
+  <input id="url" v-model="url" placeholder="Add image URL" required />
+  <form @submit.prevent="createDraft(url)">
     <button type="submit" class="btn-small pure-button primary">Create</button>
   </form>
 </template>

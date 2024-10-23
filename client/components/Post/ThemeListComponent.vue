@@ -102,7 +102,7 @@ const filteredThemes = computed(() => {
   font-size: medium;
   text-align: center;
   background-color: var(--basebg);
-  border: 3px solid var(--yellow);
+  border: 3px solid var(--blue);
   color: black;
   display: flex;
   align-items: center;

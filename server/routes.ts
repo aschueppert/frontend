@@ -2,7 +2,7 @@ import { ObjectId } from "mongodb";
 
 import { Router, getExpressRouter } from "./framework/router";
 
-import { Authing, Drafting, Events, Following, Imaging, Posting, Saving, Sessioning } from "./app";
+import { Authing, Drafting, Events, Following, Posting, Saving, Sessioning } from "./app";
 import { SessionDoc } from "./concepts/sessioning";
 
 import { z } from "zod";
@@ -210,24 +210,10 @@ class Routes {
    * @returns Draft with the content
    */
   @Router.post("/drafts")
-  async createDraft(session: SessionDoc, name: string) {
+  async createDraft(session: SessionDoc, url: string) {
     const user = Sessioning.getUser(session);
-    const url = await Imaging.getURL(name);
     const created = await Drafting.create(user, url);
     return { msg: created.msg, draft: await Responses.draft(created.draft) };
-  }
-
-  @Router.post("/images")
-  async createImage(url: string, name: string) {
-    return await Imaging.create(url, name);
-  }
-  @Router.get("/images/:name")
-  async getImage(name: string) {
-    return await Imaging.getImage(name);
-  }
-  @Router.get("/images")
-  async getImages() {
-    return await Imaging.getImages();
   }
   /**
    * Creates an event
@@ -346,11 +332,9 @@ class Routes {
    * */
 
   @Router.patch("/drafts/add/:id")
-  async addContent(session: SessionDoc, id: string, name: string) {
+  async addContent(session: SessionDoc, id: string, url: string) {
     const user = Sessioning.getUser(session);
     const draft_id = new ObjectId(id);
-    console.log(name);
-    const url = await Imaging.getURL(name);
     await Drafting.assertUserIsMember(draft_id, user);
     return await Drafting.addContent(draft_id, url);
   }

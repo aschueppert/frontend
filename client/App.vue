@@ -67,9 +67,6 @@ onBeforeMount(async () => {
         <li>
           <RouterLink :to="{ name: 'Events' }"><i class="fas fa-calendar"></i></RouterLink>
         </li>
-        <li>
-          <RouterLink :to="{ name: 'Images' }"><i class="fas fa-camera photo-icon"></i></RouterLink>
-        </li>
       </ul>
     </nav>
     <article v-if="toast !== null" class="toast" :class="toast.style">

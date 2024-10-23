@@ -6,7 +6,6 @@ import DraftsView from "../views/DraftsView.vue";
 import EventsView from "../views/EventsView.vue";
 import FollowingView from "../views/FollowingView.vue";
 import HomeView from "../views/HomeView.vue";
-import ImagesView from "../views/ImagesView.vue";
 import LoginView from "../views/LoginView.vue";
 import NotFoundView from "../views/NotFoundView.vue";
 import ProfileView from "../views/ProfileView.vue";
@@ -40,11 +39,6 @@ const router = createRouter({
       path: "/following",
       name: "Following",
       component: FollowingView,
-    },
-    {
-      path: "/images",
-      name: "Images",
-      component: ImagesView,
     },
     {
       path: "/events",
