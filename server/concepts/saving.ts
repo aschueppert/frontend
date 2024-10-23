@@ -58,6 +58,16 @@ export default class SaveConcept {
   }
 
   async assertAuthorIsUser(_id: ObjectId, user: ObjectId) {}
+
+  async assertCanSave(name: string, item: ObjectId, author: ObjectId) {
+    const save = await this.saved.readOne({ author, name });
+    if (!save) {
+      throw new NotFoundError(`Save does not exist!`);
+    }
+    if (save.items.toString().includes(item.toString())) {
+      throw new NotAllowedError(`Item is already saved!`);
+    }
+  }
 }
 
 export class SaveAuthorNotMatchError extends NotAllowedError {

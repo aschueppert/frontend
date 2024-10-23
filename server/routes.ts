@@ -440,6 +440,7 @@ class Routes {
   async saveItem(session: SessionDoc, _id: string, name: string) {
     const oid = new ObjectId(_id);
     const user = Sessioning.getUser(session);
+    await Saving.assertCanSave(name, oid, user);
     const save_oid = (await Saving.getSave(user, name))._id;
     return Saving.save(save_oid, oid);
   }

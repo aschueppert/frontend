@@ -2,8 +2,12 @@
 import { defineEmits, defineProps, onBeforeMount, ref } from "vue";
 import { fetchy } from "../../utils/fetchy";
 import ScrollComponent from "../ScrollComponent.vue";
+import { useUserStore } from "@/stores/user";
+import { storeToRefs } from "pinia";
 const props = defineProps(["event"]);
 const emit = defineEmits(["refreshEvents"]);
+
+const { currentUsername } = storeToRefs(useUserStore());
 
 let post = ref({ content: [] }); // Initialize post with a default structure
 
@@ -36,7 +40,7 @@ onBeforeMount(async () => {
     <h4>Attendees: {{ props.event.attendees.join(", ") }}</h4>
     <h4>Location: {{ props.event.location }}</h4>
     <ScrollComponent :content="post.content" />
-    <menu><button class="btn-small pure-button" @click="rsvp">RSVP</button></menu>
+    <menu><button v-if="!props.event.attendees.toString().includes(currentUsername.toString())" class="btn-small pure-button" @click="rsvp">RSVP</button></menu>
   </main>
 </template>
 
