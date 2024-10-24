@@ -52,7 +52,7 @@ a.button {
   color: #212529;
   background-color: #f1f3f5;
   border-radius: 0.25em;
-  padding: 2px;
+  padding: 5px;
   text-decoration: none;
 }
 
@@ -79,7 +79,7 @@ a.button {
   width: 100px;
   height: 100px;
   object-fit: cover; /* Ensures the image fills the square without distortion */
-  border-radius: 4px;
+  border-radius: 0.5em;
   border: 1px solid transparent;
 }
 
@@ -120,12 +120,16 @@ input {
 }
 
 .item-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 0.5em; /* Adjust gap between user items */
   margin-top: 0.5em;
   margin-bottom: 0.5em;
   list-style-type: none;
+
+  max-height: 40%; /* Set a max height for the list */
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: 0; /* Optional: Remove padding for a cleaner look */
 }
 
 form {
@@ -133,10 +137,12 @@ form {
   display: flex;
   flex-direction: row;
   gap: 1em;
+  margin-top: 1em;
 }
 
 h3 {
   text-align: center;
+  font-size: 1em;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
 }
@@ -150,7 +156,7 @@ article {
   position: relative;
   background-color: var(--base-bg);
   border: 3px solid var(--base-border);
-  border-radius: 1em;
+  border-radius: 0.5em;
   display: flex;
   flex-direction: column;
   margin-bottom: 1em;
@@ -169,7 +175,6 @@ main {
 .overlay {
   position: absolute;
   width: 100%;
-  border-radius: 1em;
 }
 
 .overlay-form {
@@ -200,4 +205,15 @@ menu.separate {
   justify-content: space-between;
   font: 2em;
   margin-top: 0;
+}
+
+button.item {
+  width: 100%;
+  background-color: var(--basebg);
+  border: 2px solid var(--blue);
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }

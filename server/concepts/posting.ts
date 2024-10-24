@@ -41,6 +41,7 @@ export interface PostDoc extends BaseDoc {
   approved: Array<ObjectId>;
   status: string;
   theme: string;
+  comment: string;
   options?: PostOptions;
 }
 
@@ -57,10 +58,10 @@ export default class PostingConcept {
     this.posts = new DocCollection<PostDoc>(collectionName);
   }
 
-  async create(approvers: Array<ObjectId>, content: Array<string>) {
+  async create(approvers: Array<ObjectId>, content: Array<string>, comment: string) {
     const approved = new Array<ObjectId>();
     const theme = "none";
-    const _id = await this.posts.createOne({ approvers, content, approved, status: "Not Approved", theme });
+    const _id = await this.posts.createOne({ approvers, content, approved, status: "Not Approved", theme, comment });
     return { msg: "Post successfully created!", post: await this.posts.readOne({ _id }) };
   }
 

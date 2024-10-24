@@ -14,31 +14,27 @@ async function register() {
   void router.push({ name: "Home" });
   void router.push({ name: "Drafts" });
   void router.push({ name: "Posts" });
+  void router.push({ name: "Events" });
+  void router.push({ name: "Following" });
+  void router.push({ name: "Saved" });
 }
 </script>
 
 <template>
-  <form class="pure-form pure-form-aligned" @submit.prevent="register">
-    <h3>Register User</h3>
-    <fieldset>
-      <div class="pure-control-group">
-        <label for="aligned-name">Username</label>
-        <input v-model.trim="username" type="text" id="aligned-name" placeholder="Username" required />
-      </div>
-      <div class="pure-control-group">
-        <label for="aligned-password">Password</label>
-        <input type="password" v-model.trim="password" id="aligned-password" placeholder="Password" required />
-      </div>
-      <div class="pure-controls">
-        <button type="submit" class="pure-button pure-button-primary">Register</button>
-      </div>
-    </fieldset>
+  <h2>Register User</h2>
+  <div class="inputs">
+    <input v-model.trim="username" type="text" id="aligned-name" placeholder="Username" required />
+    <input type="password" v-model.trim="password" id="aligned-password" placeholder="Password" required />
+  </div>
+  <form @submit.prevent="register">
+    <button type="submit" class="pure-button pure-button primary">Register</button>
   </form>
 </template>
 
 <style scoped>
-h3 {
+.inputs {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 0.5em;
 }
 </style>

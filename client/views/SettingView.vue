@@ -10,9 +10,12 @@ const { logoutUser, deleteUser } = useUserStore();
 async function logout() {
   await logoutUser();
   void router.push({ name: "Home" });
-
   void router.push({ name: "Drafts" });
   void router.push({ name: "Posts" });
+  void router.push({ name: "Events" });
+  void router.push({ name: "Following" });
+  void router.push({ name: "Saved" });
+  router.push({ name: "Login" });
 }
 
 async function delete_() {
@@ -20,13 +23,17 @@ async function delete_() {
   void router.push({ name: "Home" });
   void router.push({ name: "Drafts" });
   void router.push({ name: "Posts" });
+  void router.push({ name: "Events" });
+  void router.push({ name: "Following" });
+  void router.push({ name: "Saved" });
+  router.push({ name: "Login" });
 }
 </script>
 
 <template>
   <main class="column">
     <h1>Settings for {{ currentUsername }}</h1>
-    <button class="pure-button pure-button-primary" @click="logout">Logout</button>
+    <button class="pure-button pure-button primary" @click="logout">Logout</button>
     <button class="button-error pure-button" @click="delete_">Delete User</button>
     <UpdateUserForm />
   </main>

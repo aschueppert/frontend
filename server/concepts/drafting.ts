@@ -7,6 +7,7 @@ export interface DraftDoc extends BaseDoc {
   members: Array<ObjectId>;
   contentSet: Array<string>;
   selectedSet: Array<string>;
+  comment: string;
 }
 
 export default class DraftingConcept {
@@ -23,10 +24,10 @@ export default class DraftingConcept {
     const members = new Array<ObjectId>();
     const contentSet = new Array<string>();
     const selectedSet = new Array<string>();
-
+    const comment = "";
     members.push(author);
     contentSet.push(content);
-    const _id = await this.drafts.createOne({ members, contentSet, selectedSet });
+    const _id = await this.drafts.createOne({ members, contentSet, selectedSet, comment });
     return { msg: "Draft successfully created!", draft: await this.drafts.readOne({ _id }) };
   }
 
@@ -48,6 +49,15 @@ export default class DraftingConcept {
     const members = draft.members;
     await this.drafts.partialUpdateOne({ _id }, { members });
     return { msg: "User successfully added!" };
+  }
+
+  async addComment(_id: ObjectId, comment: string) {
+    const draft = await this.drafts.readOne({ _id });
+    if (!draft) {
+      throw new NotFoundError(`Draft ${_id} does not exist!`);
+    }
+    await this.drafts.partialUpdateOne({ _id }, { comment });
+    return { msg: "Comment successfully added!" };
   }
 
   async addContent(_id: ObjectId, content: string) {
@@ -109,7 +119,13 @@ export default class DraftingConcept {
     }
     return draft.selectedSet;
   }
-
+  async getComment(_id: ObjectId) {
+    const draft = await this.drafts.readOne({ _id });
+    if (!draft) {
+      throw new NotFoundError(`Draft ${_id} does not exist!`);
+    }
+    return draft.comment;
+  }
   async getMembers(_id: ObjectId) {
     const draft = await this.drafts.readOne({ _id });
     if (!draft) {

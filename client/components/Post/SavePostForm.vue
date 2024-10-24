@@ -69,6 +69,7 @@ onMounted(async () => {
         {{ name }}
       </button>
     </ul>
+    <p v-else>No saved group names found. Create one by going to the save page</p>
     <form @submit.prevent="savePost(selectedName)">
       <li><button class="btn-small pure-button primary" type="submit" :disabled="!selectedName">Save</button></li>
       <li><button type="button" class="btn-small pure-button" @click="cancelSelection">Cancel</button></li>
@@ -76,4 +77,8 @@ onMounted(async () => {
   </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+p {
+  margin-top: 1em;
+}
+</style>

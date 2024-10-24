@@ -35,6 +35,7 @@ const prevImage = () => {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 0.5em;
 }
 
 .image-slider {
@@ -53,7 +54,7 @@ const prevImage = () => {
   left: 0;
   width: 100%;
   height: 100%;
-  border-radius: 1em;
+  border-radius: 0.5em;
   object-fit: cover; /* Ensures the image fills the square without distortion */
   box-sizing: border-box;
 }
@@ -71,8 +72,8 @@ const prevImage = () => {
   z-index: 2;
   transition: background-color 0.3s ease;
 
-  width: 50px; /* Set a fixed width */
-  height: 50px; /* Set a fixed height */
+  width: 15%; /* Set a fixed width */
+  height: 15%; /* Set a fixed height */
   border-radius: 50%; /* Make it circular */
   display: flex; /* Center the content */
   justify-content: center; /* Center horizontally */

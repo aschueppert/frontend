@@ -38,7 +38,14 @@ export default class SaveConcept {
   async getByAuthor(author: ObjectId) {
     return await this.saved.readMany({ author });
   }
-
+  async deleteItem(item: ObjectId) {
+    let posts = await this.saved.readMany({ items: item });
+    for (let post of posts) {
+      let index = post.items.indexOf(item);
+      post.items.splice(index, 1);
+      await this.saved.partialUpdateOne({ _id: post._id }, { items: post.items });
+    }
+  }
   async getSaved() {
     return await this.saved.readMany({}, { sort: { _id: -1 } });
   }

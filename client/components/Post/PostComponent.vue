@@ -32,15 +32,17 @@ const approvePost = async () => {
 <template>
   <main>
     <div class="members-block">
-      Members:&nbsp;
+      <p>Members:&nbsp;</p>
       <p class="members" v-for="(item, index) in props.post.approvers" :key="index" :style="{ color: props.post.approved.includes(item) ? 'green' : 'inherit' }">
         {{ item }}<span v-if="index < props.post.approvers.length - 1">,</span>
       </p>
     </div>
-    <h4>Theme: {{ props.post.theme }}</h4>
+    <p>Theme: {{ props.post.theme }}</p>
+    <p>Status: {{ props.post.status }}</p>
+    <p class="small-note" v-if="props.post.status === 'Not Approved'">Note: All members need to approve post for it to be viewable by others</p>
 
     <ScrollComponent :content="props.post.content" />
-
+    <p>{{ props.post.comment }}</p>
     <menu class="separate" v-if="props.post.approvers.map(String).includes(String(currentUsername))">
       <menu>
         <button v-if="!props.post.approved.map(String).includes(String(currentUsername))" class="btn-small pure-button green" @click="approvePost">
@@ -71,6 +73,9 @@ const approvePost = async () => {
 </template>
 
 <style scoped>
+p {
+  margin-bottom: 0.5em;
+}
 .members-block {
   display: flex;
   flex-wrap: wrap;
@@ -81,8 +86,8 @@ const approvePost = async () => {
 .members {
   margin-right: 5px;
 }
-
-h4 {
-  margin-bottom: 1em;
+.small-note {
+  font-size: 0.7em;
+  font-style: italic;
 }
 </style>

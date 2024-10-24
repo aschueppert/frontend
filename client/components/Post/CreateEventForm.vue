@@ -21,7 +21,7 @@ const createEvent = async (location: string) => {
     <input v-model="location" placeholder="Add Location" />
     <form @submit.prevent="createEvent(location)">
       <li>
-        <button class="btn-small pure-button-primary pure-button primary" type="submit" id="submit">Create</button>
+        <button class="btn-small pure-button primary" type="submit" id="submit">Create</button>
       </li>
       <li><button type="button" class="btn-small pure-button" @click="emit('createEvent')">Cancel</button></li>
     </form>

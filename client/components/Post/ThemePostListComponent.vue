@@ -55,7 +55,7 @@ onBeforeMount(async () => {
   </section>
 
   <!-- Message when no posts are found -->
-  <p v-else-if="loaded">No Posts found</p>
+  <p v-else-if="loaded">No posts yet. Make your own!</p>
 
   <!-- Loading message -->
   <p v-else>Loading...</p>
@@ -66,7 +66,7 @@ onBeforeMount(async () => {
   font-size: 30px;
   padding-top: 0.3em;
   padding-bottom: 0.3em;
-  background-color: var(--orange);
+  background-color: var(--blue);
   color: white;
 }
 .overlap-container {

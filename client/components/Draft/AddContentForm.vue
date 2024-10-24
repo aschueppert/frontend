@@ -27,7 +27,7 @@ const addContent = async (url: string) => {
     <h3>Add Content:</h3>
     <input v-model="url" id="url" placeholder="Add image URL" required />
     <form @submit.prevent="addContent(url)">
-      <li><button class="btn-small pure-button-primary pure-button" type="submit" id="submit">Add</button></li>
+      <li><button class="btn-small pure-button primary pure-button" type="submit" id="submit">Add</button></li>
       <li><button class="btn-small pure-button" @click="emit('addContent')">Cancel</button></li>
     </form>
   </main>

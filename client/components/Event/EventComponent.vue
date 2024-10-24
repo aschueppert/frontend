@@ -36,12 +36,16 @@ onBeforeMount(async () => {
 
 <template>
   <main>
-    <h4>Hosts: {{ props.event.hosts.join(", ") }}</h4>
-    <h4>Attendees: {{ props.event.attendees.join(", ") }}</h4>
-    <h4>Location: {{ props.event.location }}</h4>
+    <p>Hosts: {{ props.event.hosts.join(", ") }}</p>
+    <p>Attendees: {{ props.event.attendees.join(", ") }}</p>
+    <p>Location: {{ props.event.location }}</p>
     <ScrollComponent :content="post.content" />
-    <menu><button v-if="!props.event.attendees.toString().includes(currentUsername.toString())" class="btn-small pure-button" @click="rsvp">RSVP</button></menu>
+    <menu><button v-if="!props.event.attendees.toString().includes(currentUsername.toString())" class="btn-small pure-button primary" @click="rsvp">RSVP Yes</button></menu>
   </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+p {
+  margin-bottom: 0.2em;
+}
+</style>

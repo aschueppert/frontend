@@ -30,13 +30,20 @@ onBeforeMount(async () => {
     <!-- Top section for the logo -->
     <div class="top-bar">
       <div class="title">
-        <RouterLink :to="{ name: 'Home' }">
-          <h1 class="logo">moodBoard</h1>
-        </RouterLink>
+        <div v-if="isLoggedIn">
+          <RouterLink :to="{ name: 'Home' }">
+            <h1 class="logo">moodBoard</h1>
+          </RouterLink>
+        </div>
+        <div v-else>
+          <RouterLink :to="{ name: 'Login' }">
+            <h1 class="logo">moodBoard</h1>
+          </RouterLink>
+        </div>
       </div>
       <div class="top-nav">
         <ul>
-          <li>
+          <li v-if="isLoggedIn">
             <RouterLink :to="{ name: 'Posts' }"> <i class="fas fa-user"></i></RouterLink>
           </li>
           <li v-if="isLoggedIn">
@@ -52,19 +59,19 @@ onBeforeMount(async () => {
     <!-- Bottom navigation bar -->
     <nav>
       <ul>
-        <li>
+        <li v-if="isLoggedIn">
           <RouterLink :to="{ name: 'Home' }"><i class="fas fa-home"></i></RouterLink>
         </li>
-        <li>
+        <li v-if="isLoggedIn">
           <RouterLink :to="{ name: 'Drafts' }"><i class="fas fa-plus" id="bordered-icon"></i></RouterLink>
         </li>
-        <li>
+        <li v-if="isLoggedIn">
           <RouterLink :to="{ name: 'Saved' }"><i class="fas fa-bookmark"></i></RouterLink>
         </li>
-        <li>
+        <li v-if="isLoggedIn">
           <RouterLink :to="{ name: 'Following' }"><i class="fas fa-heart"></i></RouterLink>
         </li>
-        <li>
+        <li v-if="isLoggedIn">
           <RouterLink :to="{ name: 'Events' }"><i class="fas fa-calendar"></i></RouterLink>
         </li>
       </ul>

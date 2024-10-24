@@ -4,10 +4,13 @@ import { formatDate } from "@/utils/formatDate";
 import { storeToRefs } from "pinia";
 import { defineEmits, defineProps } from "vue";
 import { fetchy } from "../../utils/fetchy";
+import { ref } from "vue";
 
 const props = defineProps(["draft"]);
 const emit = defineEmits(["addMember", "addContent", "selectContent", "convertDraft", "refreshDrafts"]);
 const { currentUsername } = storeToRefs(useUserStore());
+const comment = ref("");
+const editingComment = ref(false); // Track if the comment is being edited
 
 const deleteDraft = async () => {
   try {
@@ -21,6 +24,18 @@ const deleteDraft = async () => {
 const convertDraft = async () => {
   try {
     await fetchy(`/api/posts/convert/${props.draft._id}`, "POST", { body: { draft_id: props.draft._id } });
+  } catch {
+    return;
+  }
+  emit("refreshDrafts");
+};
+
+const addComment = async () => {
+  if (comment.value.trim() === "") return; // Avoid empty comments
+  try {
+    await fetchy(`/api/drafts/comment/${props.draft._id}`, "PATCH", { body: { id: props.draft._id, comment: comment.value } });
+    comment.value = ""; // Clear the comment after adding
+    editingComment.value = false; // Stop editing
   } catch {
     return;
   }
@@ -46,16 +61,24 @@ const selectContent = async (content: string) => {
   }
   emit("refreshDrafts");
 };
+
+// Handle key press event for the comment input
+const handleKeyPress = (event: KeyboardEvent) => {
+  if (event.key === "Enter") {
+    addComment();
+  }
+};
 </script>
+
 <template>
-  <!-- Memeber-->
+  <!-- Member -->
   <main>
     <div class="members">
       <p>Members: {{ props.draft.members.join(", ") }}</p>
       <button class="btn-small pure-button add-member" @click="emit('addMember', props.draft._id)">+</button>
     </div>
 
-    <!-- Content-->
+    <!-- Content -->
     <div class="center-container">
       <div class="image-container">
         <p v-for="(item, index) in props.draft.contentSet" :key="index">
@@ -63,20 +86,38 @@ const selectContent = async (content: string) => {
             <img :src="item" alt="Image description" class="square-image" />
           </button>
         </p>
-        <p><button class="btn-small pure-button" id="add" @click="emit('addContent', props.draft._id)">+</button></p>
+        <p>
+          <button class="btn-small pure-button" id="add" @click="emit('addContent', props.draft._id)">+</button>
+        </p>
       </div>
     </div>
-    <!-- Edit-->
+
+    <!-- Edit Comment -->
+    <div class="comment-section">
+      <template v-if="editingComment">
+        <input id="comment" v-model="comment" @keypress="handleKeyPress" placeholder="Add Comment" />
+      </template>
+      <template v-else>
+        <p @click="editingComment = true">{{ props.draft.comment || "No comment yet. Click to add one." }}</p>
+      </template>
+    </div>
+
     <menu>
-      <li><button class="btn-small pure-button item" @click="convertDraft">Post</button></li>
-      <li><button class="button-error btn-small pure-button item" @click="deleteDraft">Delete</button></li>
+      <li>
+        <button class="btn-small pure-button" @click="convertDraft">Post</button>
+      </li>
+      <li>
+        <button class="button-error btn-small pure-button" @click="deleteDraft">Delete</button>
+      </li>
     </menu>
+
     <div class="timestamp">
       <p v-if="props.draft.dateCreated !== props.draft.dateUpdated">{{ formatDate(props.draft.dateUpdated) }}</p>
       <p v-else>{{ formatDate(props.draft.dateCreated) }}</p>
     </div>
   </main>
 </template>
+
 <style scoped>
 p {
   gap: 0em;
@@ -106,5 +147,9 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.comment-section {
+  margin-top: 1em; /* Spacing for the comment section */
 }
 </style>

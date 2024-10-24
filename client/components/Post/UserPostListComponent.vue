@@ -7,6 +7,7 @@ import { storeToRefs } from "pinia";
 import { onBeforeMount, ref } from "vue";
 import { fetchy } from "../../utils/fetchy";
 import CreateEventForm from "./CreateEventForm.vue";
+const { isLoggedIn } = storeToRefs(useUserStore());
 
 let setting = ref("");
 let saving = ref("");
@@ -48,23 +49,25 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <section v-if="loaded && posts.length !== 0">
-    <article v-for="post in posts" :key="post._id" :class="{ approved: post.status === 'Approved' }">
-      <div class="overlap-container">
-        <div v-if="setting === post._id || saving === post._id || creating === post._id" class="overlay"></div>
-        <PostComponent :post="post" @refreshPosts="getPosts" @setTheme="updateSetting" @savePost="updateSaving" @createEvent="updateCreating" />
-        <SetThemeForm v-if="setting == post._id" :post="post" @refreshPosts="getPosts" @setTheme="updateSetting" class="overlay-form" />
-        <SavePostForm v-if="saving == post._id" :post="post" @refreshPosts="getPosts" @savePost="updateSaving" class="overlay-form" />
-        <CreateEventForm v-if="creating == post._id" :post="post" @refreshPosts="getPosts" @createEvent="updateCreating" class="overlay-form" />
-      </div>
-    </article>
+  <section v-if="isLoggedIn">
+    <section v-if="loaded && posts.length !== 0">
+      <article v-for="post in posts" :key="post._id" :class="{ approved: post.status === 'Approved' }">
+        <div class="overlap-container">
+          <div v-if="setting === post._id || saving === post._id || creating === post._id" class="overlay"></div>
+          <PostComponent :post="post" @refreshPosts="getPosts" @setTheme="updateSetting" @savePost="updateSaving" @createEvent="updateCreating" />
+          <SetThemeForm v-if="setting == post._id" :post="post" @refreshPosts="getPosts" @setTheme="updateSetting" class="overlay-form" />
+          <SavePostForm v-if="saving == post._id" :post="post" @refreshPosts="getPosts" @savePost="updateSaving" class="overlay-form" />
+          <CreateEventForm v-if="creating == post._id" :post="post" @refreshPosts="getPosts" @createEvent="updateCreating" class="overlay-form" />
+        </div>
+      </article>
+    </section>
+
+    <!-- Message when no posts are found -->
+    <p v-else-if="loaded">No Posts found. Start creating one now!</p>
+
+    <!-- Loading message -->
+    <p v-else>Loading...</p>
   </section>
-
-  <!-- Message when no posts are found -->
-  <p v-else-if="loaded">No Posts found</p>
-
-  <!-- Loading message -->
-  <p v-else>Loading...</p>
 </template>
 
 <style scoped>

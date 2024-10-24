@@ -13,31 +13,28 @@ async function login() {
   void router.push({ name: "Home" });
   void router.push({ name: "Drafts" });
   void router.push({ name: "Posts" });
+  void router.push({ name: "Events" });
+  void router.push({ name: "Following" });
+  void router.push({ name: "Saved" });
+  router.push({ name: "Home" });
 }
 </script>
 
 <template>
-  <form class="pure-form pure-form-aligned" @submit.prevent="login">
-    <h3>Login</h3>
-    <fieldset>
-      <div class="pure-control-group">
-        <label for="aligned-name">Username</label>
-        <input v-model.trim="username" type="text" id="aligned-name" placeholder="Username" required />
-      </div>
-      <div class="pure-control-group">
-        <label for="aligned-password">Password</label>
-        <input type="password" v-model.trim="password" id="aligned-password" placeholder="Password" required />
-      </div>
-      <div class="pure-controls">
-        <button type="submit" class="pure-button primary">Submit</button>
-      </div>
-    </fieldset>
+  <h2>Login</h2>
+  <div class="inputs">
+    <input v-model.trim="username" type="text" id="aligned-name" placeholder="Username" required />
+    <input type="password" v-model.trim="password" id="aligned-password" placeholder="Password" required />
+  </div>
+  <form @submit.prevent="login">
+    <button type="submit" class="pure-button btn-small primary">Submit</button>
   </form>
 </template>
 
 <style scoped>
-h3 {
+.inputs {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 0.5em;
 }
 </style>

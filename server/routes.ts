@@ -6,7 +6,7 @@ import { Authing, Drafting, Events, Following, Posting, Saving, Sessioning } fro
 import { SessionDoc } from "./concepts/sessioning";
 
 import { z } from "zod";
-import { NotFoundError } from "./concepts/errors";
+import { NotAllowedError, NotFoundError } from "./concepts/errors";
 import Responses from "./responses";
 
 /**
@@ -128,6 +128,7 @@ class Routes {
   @Router.get("/themes/:theme")
   async getThemePosts(session: SessionDoc, theme: string) {
     console.log(theme);
+    await Posting.assertThemeIsValid(theme);
     const user = Sessioning.getUser(session);
     const relationships = await Following.getFollowing(user);
     const following = relationships.map((r) => r.following);
@@ -197,8 +198,13 @@ class Routes {
     const draft_oid = new ObjectId(draft_id);
     await Drafting.assertUserIsMember(draft_oid, user);
     const content = await Drafting.getContent(draft_oid);
+    if (content.length == 0) {
+      throw new NotFoundError("No content selected, click the images you want to post");
+    }
+
     const members = await Drafting.getMembers(draft_oid);
-    const created = await Posting.create(members, content);
+    const comment = await Drafting.getComment(draft_oid);
+    const created = await Posting.create(members, content, comment);
     await Drafting.delete(draft_oid);
     return { msg: created.msg, post: await Responses.post(created.post) };
   }
@@ -211,6 +217,9 @@ class Routes {
    */
   @Router.post("/drafts")
   async createDraft(session: SessionDoc, url: string) {
+    if (!url) {
+      throw new NotAllowedError("Add a url to create a draft");
+    }
     const user = Sessioning.getUser(session);
     const created = await Drafting.create(user, url);
     return { msg: created.msg, draft: await Responses.draft(created.draft) };
@@ -338,6 +347,15 @@ class Routes {
     await Drafting.assertUserIsMember(draft_id, user);
     return await Drafting.addContent(draft_id, url);
   }
+
+  @Router.patch("/drafts/comment/:id")
+  async addComment(session: SessionDoc, id: string, comment: string) {
+    const user = Sessioning.getUser(session);
+    const draft_id = new ObjectId(id);
+    await Drafting.assertUserIsMember(draft_id, user);
+    return await Drafting.addComment(draft_id, comment);
+  }
+
   /** Adds a member to members of draft
    * @param session the session of the user
    *  @param id the id of the draft
@@ -368,6 +386,8 @@ class Routes {
     const user = Sessioning.getUser(session);
     const oid = new ObjectId(id);
     await Posting.assertUserIsApprover(oid, user);
+    //if in save also delete in save
+    await Saving.deleteItem(oid);
     return Posting.delete(oid);
   }
 
@@ -424,6 +444,7 @@ class Routes {
   async saveItem(session: SessionDoc, _id: string, name: string) {
     const oid = new ObjectId(_id);
     const user = Sessioning.getUser(session);
+    await Posting.getPost(oid);
     await Saving.assertCanSave(name, oid, user);
     const save_oid = (await Saving.getSave(user, name))._id;
     return Saving.save(save_oid, oid);

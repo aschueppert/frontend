@@ -67,7 +67,7 @@ onMounted(async () => {
     <input v-model="searchTerm" placeholder="Search for a user" />
     <!-- Display the filtered list of users -->
     <ul v-if="filteredUsers.length > 0" class="item-list">
-      <button v-for="user in filteredUsers.slice(0, 6)" :key="user.id" class="btn-small pure-button" :class="{ selected: selectedUser === user.toString() }" @click="selectUser(user.toString())">
+      <button v-for="user in filteredUsers.slice(0, 6)" :key="user.id" class="btn-small pure-button item" :class="{ selected: selectedUser === user.toString() }" @click="selectUser(user.toString())">
         {{ user }}
       </button>
     </ul>
@@ -76,29 +76,11 @@ onMounted(async () => {
 
     <form @submit.prevent="followUser(selectedUser)">
       <li>
-        <button class="btn-small pure-button-primary pure-button primary" type="submit" id="submit" :disabled="!selectedUser">Follow</button>
+        <button class="btn-small pure-button primary" type="submit" id="submit" :disabled="!selectedUser">Follow</button>
       </li>
       <li><button type="button" class="btn-small pure-button" @click="cancelSelection">Cancel</button></li>
     </form>
   </div>
 </template>
 
-<style scoped>
-.item-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5em; /* Adjust gap between user items */
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  list-style-type: none;
-}
-
-form {
-  list-style-type: none;
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-  padding: 0;
-  margin: 0;
-}
-</style>
+<style scoped></style>

@@ -11,7 +11,6 @@ const themes = [
   "music",
   "theatre",
   "art",
-  "sports",
   "food",
   "fashion",
   "technology",
@@ -44,7 +43,7 @@ const filteredThemes = computed(() => {
 </script>
 
 <template>
-  <main v-if="isLoggedIn">
+  <main>
     <h2 class="title">Choose a Theme:</h2>
 
     <!-- Search bar remains at the top -->
@@ -54,8 +53,8 @@ const filteredThemes = computed(() => {
     <div class="scrollable-list">
       <ul v-if="filteredThemes.length > 0" class="items">
         <li v-for="theme in filteredThemes" :key="theme" class="theme-item">
-          <router-link class="btn-small pure-button big-button" :to="{ name: 'Theme', params: { themeName: theme } }">
-            {{ theme }}
+          <router-link class="link" :to="{ name: 'Theme', params: { themeName: theme } }">
+            <button class="btn-small pure-button item">{{ theme }}</button>
           </router-link>
         </li>
       </ul>
@@ -95,17 +94,7 @@ const filteredThemes = computed(() => {
   gap: 1em;
   list-style-type: none;
 }
-
-.big-button {
-  width: 100%;
-  padding: 1em;
-  font-size: medium;
-  text-align: center;
-  background-color: var(--basebg);
-  border: 3px solid var(--blue);
-  color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.link {
+  text-decoration: none;
 }
 </style>
