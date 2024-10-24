@@ -16,7 +16,7 @@ onBeforeMount(async () => {
   try {
     await userStore.updateSession();
   } catch {
-    // User is not logged in
+    router.push({ name: "Login" });
   }
 });
 </script>
