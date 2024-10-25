@@ -59,7 +59,7 @@ onBeforeMount(async () => {
       <div class="column">
         <router-link class="link" :to="{ name: 'Following', params: { username: props.username } }"> Following: {{ following.length }} </router-link>
         <button
-          v-if="props.username != currentUsername && !user_following.some((user) => user.following === props.username)"
+          v-if="props.username != currentUsername && !user_following.some((user: any) => user.following === props.username)"
           class="btn-small pure-button primary small"
           @click="() => followUser(props.username)"
         >
