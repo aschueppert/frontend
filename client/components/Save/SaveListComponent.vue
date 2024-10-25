@@ -34,7 +34,9 @@ onBeforeMount(async () => {
     <h2>Saved:</h2>
     <section v-if="loaded && saved.length !== 0">
       <article v-for="save in saved" :key="save._id">
-        <h3 class="header">{{ save.name }}</h3>
+        <router-link class="link" :to="{ name: 'SavedPosts', params: { name: save.name } }">
+          <h3 class="header">{{ save.name }}</h3>
+        </router-link>
         <div class="items">
           <SaveComponent :save="save" @refreshSaved="getSaved" class="save-component" />
         </div>

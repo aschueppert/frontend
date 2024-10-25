@@ -49,12 +49,4 @@ onMounted(async () => {
 .post-item {
   flex: 0 1 calc(50% - 1em); /* Flex-grow: 0; Flex-shrink: 1; Flex-basis: 50% minus gap */
 }
-
-.header {
-  font-size: 30px;
-  padding-top: 0.3em;
-  padding-bottom: 0.3em;
-  background-color: var(--blue);
-  color: white;
-}
 </style>

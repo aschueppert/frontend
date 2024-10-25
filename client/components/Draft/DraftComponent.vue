@@ -2,9 +2,8 @@
 import { useUserStore } from "@/stores/user";
 import { formatDate } from "@/utils/formatDate";
 import { storeToRefs } from "pinia";
-import { defineEmits, defineProps } from "vue";
+import { defineEmits, defineProps, ref } from "vue";
 import { fetchy } from "../../utils/fetchy";
-import { ref } from "vue";
 
 const props = defineProps(["draft"]);
 const emit = defineEmits(["addMember", "addContent", "selectContent", "convertDraft", "refreshDrafts"]);
@@ -74,7 +73,12 @@ const handleKeyPress = (event: KeyboardEvent) => {
   <!-- Member -->
   <main>
     <div class="members">
-      <p>Members: {{ props.draft.members.join(", ") }}</p>
+      <p>Members:</p>
+      <p v-for="(member, index) in props.draft.members" :key="index">
+        <router-link class="link" :to="{ name: 'Posts', params: { username: member } }">
+          {{ member }}
+        </router-link>
+      </p>
       <button class="btn-small pure-button add-member" @click="emit('addMember', props.draft._id)">+</button>
     </div>
 
@@ -126,10 +130,21 @@ p {
 .members {
   display: flex;
   align-items: center;
-  gap: 0.5em; /* Small gap between text and button */
+  gap: 0.5em; /* Space between "Members:" text and the button */
   padding-bottom: 1em;
   font-weight: bold;
   font-size: 1.2em;
+  flex-wrap: wrap; /* Enable wrapping of members' names */
+}
+
+.members p {
+  margin: 0;
+  white-space: nowrap; /* Prevent individual names from breaking mid-word */
+}
+
+.members .link {
+  overflow-wrap: break-word; /* Break long names onto the next line if necessary */
+  display: inline-block;
 }
 
 #add {
@@ -151,5 +166,8 @@ p {
 
 .comment-section {
   margin-top: 1em; /* Spacing for the comment section */
+}
+.green {
+  color: var(--green);
 }
 </style>

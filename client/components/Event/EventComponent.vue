@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { useUserStore } from "@/stores/user";
 import { defineEmits, defineProps, onBeforeMount, ref } from "vue";
 import { fetchy } from "../../utils/fetchy";
-import ScrollComponent from "../ScrollComponent.vue";
-import { useUserStore } from "@/stores/user";
+
 import { storeToRefs } from "pinia";
+import ScrollComponent from "../ScrollComponent.vue";
 const props = defineProps(["event"]);
 const emit = defineEmits(["refreshEvents"]);
 
@@ -40,6 +41,7 @@ onBeforeMount(async () => {
     <p>Attendees: {{ props.event.attendees.join(", ") }}</p>
     <p>Location: {{ props.event.location }}</p>
     <ScrollComponent :content="post.content" />
+    <p>{{ props.event.comment }}</p>
     <menu><button v-if="!props.event.attendees.toString().includes(currentUsername.toString())" class="btn-small pure-button primary" @click="rsvp">RSVP Yes</button></menu>
   </main>
 </template>

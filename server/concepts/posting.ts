@@ -131,6 +131,14 @@ export default class PostingConcept {
     }
     return post.status;
   }
+
+  async getComment(_id: ObjectId) {
+    const post = await this.posts.readOne({ _id });
+    if (!post) {
+      throw new NotFoundError(`Post ${_id} does not exist!`);
+    }
+    return post.comment;
+  }
   async delete(_id: ObjectId) {
     await this.posts.deleteOne({ _id });
     return { msg: "Post deleted successfully!" };

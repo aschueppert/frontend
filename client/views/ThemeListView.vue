@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import FollowingPostListComponent from "@/components/Post/FollowingPostListComponent.vue";
+import ThemeListComponent from "@/components/Post/ThemeListComponent.vue";
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 
@@ -8,8 +8,7 @@ const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
 
 <template>
   <main>
-    <h1>Following Posts</h1>
-    <FollowingPostListComponent />
+    <ThemeListComponent />
   </main>
 </template>
 

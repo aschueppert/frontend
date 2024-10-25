@@ -23,25 +23,27 @@ async function updatePassword() {
 
 <template>
   <h2>Update user details</h2>
-  <form @submit.prevent="updateUsername" class="pure-form">
-    <fieldset>
-      <legend>Change your username</legend>
-      <input type="text" placeholder="New username" v-model="username" required />
+  <legend>Change your username</legend>
+  <div class="inputs">
+    <input type="text" placeholder="New username" v-model="username" required />
+    <form @submit.prevent="updateUsername" class="pure-form">
       <button type="submit" class="btn-small pure-button primary full">Update username</button>
-    </fieldset>
-  </form>
+    </form>
+  </div>
 
-  <form @submit.prevent="updatePassword" class="pure-form">
-    <fieldset>
-      <legend>Change your password</legend>
-      <input type="password" placeholder="Old password" v-model="currentPassword" required />
-      <input type="password" placeholder="New password" v-model="newPassword" required />
+  <legend>Change your password</legend>
+  <div class="inputs">
+    <input placeholder="Old password" v-model="currentPassword" required />
+    <input placeholder="New password" v-model="newPassword" required />
+    <form @submit.prevent="updatePassword" class="pure-form">
       <button type="submit" class="btn-small pure-button primary full">Update password</button>
-    </fieldset>
-  </form>
+    </form>
+  </div>
 </template>
 <style scoped>
-button.full {
-  width: 100%;
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
 }
 </style>

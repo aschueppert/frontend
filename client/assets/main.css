@@ -28,6 +28,7 @@ button.btn-small {
   cursor: pointer; /* Change cursor to pointer on hover */
   display: inline-flex; /* Ensures icons are centered */
   align-items: center; /* Centers icon vertically */
+  text-align: center;
 }
 button.green {
   background-color: var(--green);
@@ -60,8 +61,9 @@ a.button {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  gap: 1em;
+  align-items: left;
+  gap: 0.5em;
+  margin-bottom: 1em;
 }
 
 .content_button {
@@ -127,7 +129,7 @@ input {
   margin-bottom: 0.5em;
   list-style-type: none;
 
-  max-height: 40%; /* Set a max height for the list */
+  max-height: 50%; /* Set a max height for the list */
   overflow-y: auto; /* Enable vertical scrolling */
   padding: 0; /* Optional: Remove padding for a cleaner look */
 }
@@ -202,6 +204,8 @@ menu {
 }
 
 menu.separate {
+  margin-left: auto;
+  margin: 0 auto;
   justify-content: space-between;
   font: 2em;
   margin-top: 0;
@@ -216,4 +220,17 @@ button.item {
   align-items: center;
   justify-content: center;
   text-decoration: none;
+}
+
+p.p {
+  margin-bottom: 1em;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+}
+
+.link:hover {
+  text-decoration: underline;
 }

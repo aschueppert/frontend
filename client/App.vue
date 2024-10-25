@@ -7,6 +7,7 @@ import { RouterLink, RouterView, useRoute } from "vue-router";
 
 const currentRoute = useRoute();
 const currentRouteName = computed(() => currentRoute.name);
+const { currentUsername } = storeToRefs(useUserStore());
 const userStore = useUserStore();
 const { isLoggedIn } = storeToRefs(userStore);
 const { toast } = storeToRefs(useToastStore());
@@ -44,7 +45,9 @@ onBeforeMount(async () => {
       <div class="top-nav">
         <ul>
           <li v-if="isLoggedIn">
-            <RouterLink :to="{ name: 'Posts' }"> <i class="fas fa-user"></i></RouterLink>
+            <RouterLink :to="{ name: 'Posts', params: { username: currentUsername } }">
+              <i class="fas fa-user"></i>
+            </RouterLink>
           </li>
           <li v-if="isLoggedIn">
             <RouterLink :to="{ name: 'Settings' }"><i class="fas fa-cog settings-icon"></i></RouterLink>
@@ -63,16 +66,16 @@ onBeforeMount(async () => {
           <RouterLink :to="{ name: 'Home' }"><i class="fas fa-home"></i></RouterLink>
         </li>
         <li v-if="isLoggedIn">
+          <RouterLink :to="{ name: 'ThemeList' }"><i class="fas fa-palette"></i></RouterLink>
+        </li>
+        <li v-if="isLoggedIn">
           <RouterLink :to="{ name: 'Drafts' }"><i class="fas fa-plus" id="bordered-icon"></i></RouterLink>
         </li>
         <li v-if="isLoggedIn">
-          <RouterLink :to="{ name: 'Saved' }"><i class="fas fa-bookmark"></i></RouterLink>
-        </li>
-        <li v-if="isLoggedIn">
-          <RouterLink :to="{ name: 'Following' }"><i class="fas fa-heart"></i></RouterLink>
-        </li>
-        <li v-if="isLoggedIn">
           <RouterLink :to="{ name: 'Events' }"><i class="fas fa-calendar"></i></RouterLink>
+        </li>
+        <li v-if="isLoggedIn">
+          <RouterLink :to="{ name: 'Saved' }"><i class="fas fa-bookmark"></i></RouterLink>
         </li>
       </ul>
     </nav>

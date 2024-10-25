@@ -97,7 +97,7 @@ class Routes {
     const id = (await Authing.getUserByUsername(username))._id;
     let posts = await Posting.getByAuthor(id);
     if (String(id) != String(user)) {
-      posts = posts.filter((post) => post.status == "approved");
+      posts = posts.filter((post) => post.status == "Approved");
     }
     return Responses.posts(posts);
   }
@@ -129,11 +129,7 @@ class Routes {
   async getThemePosts(session: SessionDoc, theme: string) {
     console.log(theme);
     await Posting.assertThemeIsValid(theme);
-    const user = Sessioning.getUser(session);
-    const relationships = await Following.getFollowing(user);
-    const following = relationships.map((r) => r.following);
     let theme_posts = await Posting.getByTheme(theme);
-    theme_posts = theme_posts.filter((post) => post.approvers.some((member) => following.map(String).includes(String(member))));
     theme_posts = theme_posts.filter((post) => post.status == "Approved");
     return Responses.posts(theme_posts);
   }
@@ -159,6 +155,13 @@ class Routes {
   async getSaved(session: SessionDoc) {
     const user = Sessioning.getUser(session);
     const saved = await Saving.getByAuthor(user);
+    return saved;
+  }
+
+  @Router.get("/saved/:name")
+  async getSave(session: SessionDoc, name: string) {
+    const user = Sessioning.getUser(session);
+    const saved = await Saving.getSave(user, name);
     return saved;
   }
 
@@ -238,7 +241,8 @@ class Routes {
     const post_oid = new ObjectId(post_id);
     await Posting.assertUserIsApprover(post_oid, user);
     const hosts = await Posting.getApprovers(post_oid);
-    const created = await Events.create(hosts, post_oid, location);
+    const comment = await Posting.getComment(post_oid);
+    const created = await Events.create(hosts, post_oid, location, comment);
     return { msg: created.msg, event: await Responses.event(created.event) };
   }
 
@@ -456,10 +460,10 @@ class Routes {
    * @param name the name of the save
    * @returns msg that save was deleted
    **/
-  @Router.get("/follows")
-  async getFollowing(session: SessionDoc) {
-    const user = Sessioning.getUser(session);
-    const created = await Following.getFollowing(user);
+  @Router.get("/follow/:username")
+  async getFollowing(username: string) {
+    const user = await Authing.getUserByUsername(username);
+    const created = await Following.getFollowing(user._id);
     return Responses.follows(created);
   }
 

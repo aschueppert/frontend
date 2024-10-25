@@ -8,6 +8,7 @@ export interface EventDoc extends BaseDoc {
   attendees: Array<ObjectId>;
   location: string;
   info: ObjectId;
+  comment: string;
 }
 
 /**
@@ -23,9 +24,9 @@ export default class EventsConcept {
     this.events = new DocCollection<EventDoc>(collectionName);
   }
 
-  async create(hosts: Array<ObjectId>, info: ObjectId, location: string) {
+  async create(hosts: Array<ObjectId>, info: ObjectId, location: string, comment: string) {
     const attendees = new Array<ObjectId>();
-    const _id = await this.events.createOne({ hosts, attendees, location, info });
+    const _id = await this.events.createOne({ hosts, attendees, location, info, comment });
     return { msg: "Event successfully created!", event: await this.events.readOne({ _id }) };
   }
 
