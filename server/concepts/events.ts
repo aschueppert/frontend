@@ -79,6 +79,12 @@ export default class EventsConcept {
     return { msg: "Event deleted successfully!" };
   }
 
+  async deleteByInfo(info: ObjectId) {
+    console.log(info);
+    await this.events.deleteMany({ info: info });
+    return { msg: "Events deleted successfully!" };
+  }
+
   async assertUserIsHost(_id: ObjectId, user: ObjectId) {
     const event = await this.events.readOne({ _id });
     if (!event) {

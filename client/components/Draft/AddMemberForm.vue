@@ -65,7 +65,7 @@ onMounted(async () => {
     <input v-model="searchTerm" placeholder="Search for a user" />
     <!-- Display the filtered list of users -->
     <ul v-if="filteredUsers.length > 0" class="item-list">
-      <button v-for="user in filteredUsers.slice(0, 6)" :key="user.id" class="btn-small pure-button item" :class="{ selected: selectedUser === user.toString() }" @click="selectUser(user.toString())">
+      <button v-for="user in filteredUsers.slice(0, 6)" :key="user.id" class="btn-small pure-button" :class="{ selected: selectedUser === user.toString() }" @click="selectUser(user.toString())">
         {{ user }}
       </button>
     </ul>

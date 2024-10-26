@@ -32,18 +32,23 @@ export default class SaveConcept {
     save.items.push(item);
     const items = save.items;
     await this.saved.partialUpdateOne({ _id }, { items });
-    return { msg: await this.saved.readOne({ _id }) };
+    return "Successfully saved!";
   }
 
   async getByAuthor(author: ObjectId) {
     return await this.saved.readMany({ author });
   }
   async deleteItem(item: ObjectId) {
-    let posts = await this.saved.readMany({ items: item });
-    for (let post of posts) {
-      let index = post.items.indexOf(item);
-      post.items.splice(index, 1);
-      await this.saved.partialUpdateOne({ _id: post._id }, { items: post.items });
+    let saved = await this.saved.readMany({ items: item });
+    console.log(saved);
+    for (let save of saved) {
+      let index = save.items.indexOf(item);
+      save.items.splice(index, 1);
+      console.log(save.items);
+      console.log(save._id);
+      let _id = save._id;
+
+      await this.saved.partialUpdateOne({ _id }, { items: save.items });
     }
   }
   async getSaved() {

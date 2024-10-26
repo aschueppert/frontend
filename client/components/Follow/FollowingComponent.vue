@@ -2,38 +2,14 @@
 import { useUserStore } from "@/stores/user";
 import { fetchy } from "@/utils/fetchy";
 import { storeToRefs } from "pinia";
-import { defineProps, onBeforeMount, ref } from "vue";
-let props = defineProps(["username"]);
+import { defineProps, ref } from "vue";
 const { isLoggedIn } = storeToRefs(useUserStore());
 
 const { currentUsername } = storeToRefs(useUserStore());
-const loaded = ref(false);
 let following = ref<Array<Record<string, string>>>([]);
 
-const emit = defineEmits(); // Define emits for the component
-
-const user_following = ref<Array<Record<string, string>>>([]);
-
-async function getFollowing() {
-  let followingResults;
-  console.log(props.username);
-  try {
-    followingResults = await fetchy(`/api/follow/${props.username}`, "GET", {});
-  } catch (e) {
-    return;
-  }
-  following.value = followingResults;
-}
-
-// Fetch the list of users that the logged-in user is following
-async function getUserFollowing() {
-  try {
-    const followingResults = await fetchy(`/api/follow/${currentUsername.value}`, "GET", {});
-    user_following.value = followingResults;
-  } catch (e) {
-    console.error("Error fetching user following:", e);
-  }
-}
+const emit = defineEmits(["refreshFollows"]); // Define emits for the component
+const props = defineProps(["username", "following", "user_following"]);
 
 // Follow a user
 const followUser = async (followingUser: string) => {
@@ -43,35 +19,43 @@ const followUser = async (followingUser: string) => {
   } catch (e) {
     console.error("Error following user:", e);
   }
+  emit("refreshFollows");
 };
 
-onBeforeMount(async () => {
-  await getFollowing();
-  await getUserFollowing();
-  loaded.value = true;
-});
+const unfollowUser = async (followingUser: string) => {
+  try {
+    await fetchy(`/api/follows/${followingUser}`, "DELETE");
+    following.value = following.value.filter((f) => f.following !== followingUser); // Remove unfollowed user from the list
+    emit("refreshFollows");
+  } catch (e) {
+    console.error("Error unfollowing user:", e);
+  }
+  emit("refreshFollows");
+};
 </script>
 
 <template>
   <!-- Section displaying the list of accounts following -->
   <div v-if="isLoggedIn">
-    <section v-if="loaded">
-      <div class="column">
-        <router-link class="link" :to="{ name: 'Following', params: { username: props.username } }"> Following: {{ following.length }} </router-link>
-        <button
-          v-if="props.username != currentUsername && !user_following.some((user: any) => user.following === props.username)"
-          class="btn-small pure-button primary small"
-          @click="() => followUser(props.username)"
-        >
+    <div class="row">
+      <h1>{{ props.username }}</h1>
+      <router-link class="link" :to="{ name: 'Following', params: { username: props.username } }">
+        <button class="btn-small pure-button">Following: {{ props.following.length }}</button></router-link
+      >
+      <div v-if="props.username != currentUsername">
+        <button v-if="!props.user_following.some((user: any) => user.following === props.username)" class="btn-small pure-button primary small" @click="() => followUser(props.username)">
           Follow
         </button>
+        <button v-else class="btn-small pure-button primary button-error" @click="() => unfollowUser(props.username)">Unfollow</button>
       </div>
-    </section>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.small {
-  width: 6em;
+.row {
+  display: flex;
+  align-items: center;
+  gap: 1em;
 }
 </style>

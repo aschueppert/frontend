@@ -6,6 +6,7 @@ import RegisterForm from "@/components/Login/RegisterForm.vue";
 <template>
   <main>
     <h1>Please login or register!</h1>
+    <p>For optimal formatting, view website on a mobile device</p>
     <LoginForm />
     <RegisterForm />
   </main>

@@ -12,6 +12,7 @@ const createEvent = async (location: string) => {
     return;
   }
   emit("refreshPosts");
+  emit("createEvent");
 };
 </script>
 

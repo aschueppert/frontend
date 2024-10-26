@@ -12,11 +12,6 @@ async function register() {
   await loginUser(username.value, password.value);
   void updateSession();
   void router.push({ name: "Home" });
-  void router.push({ name: "Drafts" });
-  void router.push({ name: "Posts" });
-  void router.push({ name: "Events" });
-  void router.push({ name: "Following" });
-  void router.push({ name: "Saved" });
 }
 </script>
 

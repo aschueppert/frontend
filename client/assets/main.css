@@ -29,6 +29,7 @@ button.btn-small {
   display: inline-flex; /* Ensures icons are centered */
   align-items: center; /* Centers icon vertically */
   text-align: center;
+  border-radius: 5px;
 }
 button.green {
   background-color: var(--green);
@@ -53,6 +54,7 @@ a.button {
   color: #212529;
   background-color: #f1f3f5;
   border-radius: 0.25em;
+  font-size: medium;
   padding: 5px;
   text-decoration: none;
 }
@@ -207,14 +209,15 @@ menu.separate {
   margin-left: auto;
   margin: 0 auto;
   justify-content: space-between;
-  font: 2em;
+  font: 10em;
   margin-top: 0;
 }
 
 button.item {
   width: 100%;
   background-color: var(--basebg);
-  border: 2px solid var(--blue);
+  border: 0.2em solid var(--blue);
+
   color: black;
   display: flex;
   align-items: center;
@@ -226,6 +229,9 @@ p.p {
   margin-bottom: 1em;
 }
 
+i {
+  font-size: 1.3em;
+}
 .link {
   text-decoration: none;
   color: black;

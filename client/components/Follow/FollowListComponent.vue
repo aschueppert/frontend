@@ -79,7 +79,7 @@ onBeforeMount(async () => {
         </router-link>
         <button v-if="props.username === currentUsername" class="button-error btn-small pure-button follow" @click="() => deleteFollowing(follow.following)">Unfollow</button>
         <div v-else>
-          <button v-if="!user_following.some((user: any) => user.following === follow.following)" class="button-error btn-small pure-button follow" @click="() => followUser(follow.following)">
+          <button v-if="!user_following.some((user: any) => user.following === follow.following)" class="primary btn-small pure-button follow" @click="() => followUser(follow.following)">
             Follow
           </button>
           <button v-else class="btn-small pure-button follow">Following</button>
@@ -94,6 +94,9 @@ onBeforeMount(async () => {
 <style scoped>
 p {
   margin: 0em;
+}
+h1 {
+  text-align: center;
 }
 .header {
   display: flex;

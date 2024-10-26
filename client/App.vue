@@ -4,7 +4,6 @@ import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import { computed, onBeforeMount } from "vue";
 import { RouterLink, RouterView, useRoute } from "vue-router";
-
 const currentRoute = useRoute();
 const currentRouteName = computed(() => currentRoute.name);
 const { currentUsername } = storeToRefs(useUserStore());
@@ -12,15 +11,11 @@ const userStore = useUserStore();
 const { isLoggedIn } = storeToRefs(userStore);
 const { toast } = storeToRefs(useToastStore());
 
-import router from "@/router";
-
 // Make sure to update the session before mounting the app in case the user is already logged in
 onBeforeMount(async () => {
   try {
     await userStore.updateSession();
-  } catch {
-    router.push({ name: "Login" });
-  }
+  } catch {}
 });
 </script>
 
@@ -100,7 +95,7 @@ onBeforeMount(async () => {
 
 /* Top bar for the logo */
 .top-bar {
-  padding: 1em 2em;
+  padding: 1em 1em;
   background-color: white;
   border-bottom: 3px solid #fc7000;
   position: fixed;
@@ -110,6 +105,7 @@ onBeforeMount(async () => {
   height: 70px; /* Set a specific height for the top bar */
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 h1 {
@@ -168,7 +164,7 @@ ul {
   display: flex;
   align-items: center;
   flex-direction: row;
-  gap: 1em;
+  gap: 1.5em;
   flex-wrap: wrap;
 }
 

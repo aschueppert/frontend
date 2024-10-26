@@ -52,9 +52,9 @@ const filteredThemes = computed(() => {
     <!-- Scrollable list of themes -->
     <div class="scrollable-list">
       <ul v-if="filteredThemes.length > 0" class="items">
-        <li v-for="theme in filteredThemes" :key="theme" class="theme-item">
+        <li v-for="theme in filteredThemes" :key="theme">
           <router-link class="link" :to="{ name: 'Theme', params: { themeName: theme } }">
-            <button class="btn-small pure-button item">{{ theme }}</button>
+            <button class="btn-small pure-button item theme-item">{{ theme }}</button>
           </router-link>
         </li>
       </ul>
@@ -90,10 +90,22 @@ const filteredThemes = computed(() => {
 
 .items {
   display: flex;
-  flex-direction: column;
-  gap: 1em;
+  flex-wrap: wrap; /* Allow items to wrap to the next row */
+  gap: 1.45em;
   list-style-type: none;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
 }
+
+.theme-item {
+  width: 140px;
+  height: 130px;
+  font-size: 1.3em;
+  text-align: center;
+}
+
 .link {
   text-decoration: none;
 }

@@ -2,44 +2,22 @@
 import { useUserStore } from "@/stores/user";
 import { formatDate } from "@/utils/formatDate";
 import { storeToRefs } from "pinia";
-import { defineEmits, defineProps, ref } from "vue";
+import { defineEmits, defineProps, ref, watch } from "vue";
 import { fetchy } from "../../utils/fetchy";
+
+// Utility to debounce function calls
+const debounce = (func: Function, delay: number) => {
+  let timeout: NodeJS.Timeout;
+  return (...args: any[]) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), delay);
+  };
+};
 
 const props = defineProps(["draft"]);
 const emit = defineEmits(["addMember", "addContent", "selectContent", "convertDraft", "refreshDrafts"]);
 const { currentUsername } = storeToRefs(useUserStore());
 const comment = ref("");
-const editingComment = ref(false); // Track if the comment is being edited
-
-const deleteDraft = async () => {
-  try {
-    await fetchy(`/api/drafts/delete/${props.draft._id}`, "DELETE");
-  } catch {
-    return;
-  }
-  emit("refreshDrafts");
-};
-
-const convertDraft = async () => {
-  try {
-    await fetchy(`/api/posts/convert/${props.draft._id}`, "POST", { body: { draft_id: props.draft._id } });
-  } catch {
-    return;
-  }
-  emit("refreshDrafts");
-};
-
-const addComment = async () => {
-  if (comment.value.trim() === "") return; // Avoid empty comments
-  try {
-    await fetchy(`/api/drafts/comment/${props.draft._id}`, "PATCH", { body: { id: props.draft._id, comment: comment.value } });
-    comment.value = ""; // Clear the comment after adding
-    editingComment.value = false; // Stop editing
-  } catch {
-    return;
-  }
-  emit("refreshDrafts");
-};
 
 // Function to select content
 const selectContent = async (content: string) => {
@@ -61,14 +39,45 @@ const selectContent = async (content: string) => {
   emit("refreshDrafts");
 };
 
-// Handle key press event for the comment input
-const handleKeyPress = (event: KeyboardEvent) => {
-  if (event.key === "Enter") {
-    addComment();
+const deleteDraft = async () => {
+  try {
+    await fetchy(`/api/drafts/delete/${props.draft._id}`, "DELETE");
+  } catch {
+    return;
+  }
+  emit("refreshDrafts");
+};
+
+const convertDraft = async () => {
+  addComment();
+  try {
+    await fetchy(`/api/posts/convert/${props.draft._id}`, "POST", { body: { draft_id: props.draft._id } });
+  } catch {
+    return;
+  }
+  emit("refreshDrafts");
+};
+
+// Direct addComment function
+const addComment = async () => {
+  if (comment.value.trim() === "") return; // Avoid empty comments
+  console.log("adding comment");
+  try {
+    await fetchy(`/api/drafts/comment/${props.draft._id}`, "PATCH", { body: { id: props.draft._id, comment: comment.value } });
+    emit("refreshDrafts");
+  } catch {
+    return;
   }
 };
-</script>
 
+// Debounced addComment to reduce API calls while typing
+const debouncedAddComment = debounce(addComment, 500);
+
+// Watch for changes in the comment and trigger debouncedAddComment
+watch(comment, () => {
+  debouncedAddComment();
+});
+</script>
 <template>
   <!-- Member -->
   <main>
@@ -79,7 +88,10 @@ const handleKeyPress = (event: KeyboardEvent) => {
           {{ member }}
         </router-link>
       </p>
-      <button class="btn-small pure-button add-member" @click="emit('addMember', props.draft._id)">+</button>
+      <button class="btn-small pure-button add-member" @click="emit('addMember', props.draft._id)">
+        <i class="fas fa-user-plus"></i>
+        <!-- Font Awesome user-plus icon -->
+      </button>
     </div>
 
     <!-- Content -->
@@ -98,12 +110,7 @@ const handleKeyPress = (event: KeyboardEvent) => {
 
     <!-- Edit Comment -->
     <div class="comment-section">
-      <template v-if="editingComment">
-        <input id="comment" v-model="comment" @keypress="handleKeyPress" placeholder="Add Comment" />
-      </template>
-      <template v-else>
-        <p @click="editingComment = true">{{ props.draft.comment || "No comment yet. Click to add one." }}</p>
-      </template>
+      <input id="comment" v-model="comment" placeholder="Add Comment" />
     </div>
 
     <menu>

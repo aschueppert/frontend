@@ -93,4 +93,8 @@ p {
   font-size: 0.7em;
   font-style: italic;
 }
+
+i {
+  font-size: 2em;
+}
 </style>

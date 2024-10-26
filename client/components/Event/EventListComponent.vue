@@ -14,6 +14,7 @@ async function getEvents() {
   let eventResults;
   try {
     eventResults = await fetchy("/api/events", "GET", {});
+    console.log(eventResults);
     events.value = eventResults;
   } catch (e) {
     console.log(e);

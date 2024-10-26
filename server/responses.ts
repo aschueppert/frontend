@@ -3,7 +3,7 @@ import { DraftAuthorNotMatchError, DraftDoc } from "./concepts/drafting";
 import { EventDoc, EventHostNotMatchError } from "./concepts/events";
 import { AlreadyFollowingError, FollowDoc, NotFollowingError } from "./concepts/following";
 import { PostAuthorNotMatchError, PostDoc } from "./concepts/posting";
-import { SaveAuthorNotMatchError } from "./concepts/saving";
+import { SaveAuthorNotMatchError, SaveDoc } from "./concepts/saving";
 import { Router } from "./framework/router";
 /**
  * This class does useful conversions for the frontend.
@@ -26,6 +26,15 @@ export default class Responses {
     return { ...post, approvers: approvers_usernames, approved: approved_usernames };
   }
 
+  static async save(save: SaveDoc | null) {
+    console.log("Save", save);
+    if (!save) {
+      return save;
+    }
+    const author = await Authing.getUserById(save.author);
+    const author_username = author.username;
+    return { ...save, author: author_username };
+  }
   static async draft(draft: DraftDoc | null) {
     if (!draft) {
       return draft;

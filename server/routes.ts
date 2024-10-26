@@ -201,12 +201,16 @@ class Routes {
     const draft_oid = new ObjectId(draft_id);
     await Drafting.assertUserIsMember(draft_oid, user);
     const content = await Drafting.getContent(draft_oid);
+
+    const comment = await Drafting.getComment(draft_oid);
     if (content.length == 0) {
       throw new NotFoundError("No content selected, click the images you want to post");
     }
+    if (comment.length == 0) {
+      throw new NotFoundError("No comment added,  make sure you hit enter after typing");
+    }
 
     const members = await Drafting.getMembers(draft_oid);
-    const comment = await Drafting.getComment(draft_oid);
     const created = await Posting.create(members, content, comment);
     await Drafting.delete(draft_oid);
     return { msg: created.msg, post: await Responses.post(created.post) };
@@ -357,7 +361,7 @@ class Routes {
     const user = Sessioning.getUser(session);
     const draft_id = new ObjectId(id);
     await Drafting.assertUserIsMember(draft_id, user);
-    return await Drafting.addComment(draft_id, comment);
+    await Drafting.addComment(draft_id, comment);
   }
 
   /** Adds a member to members of draft
@@ -391,7 +395,11 @@ class Routes {
     const oid = new ObjectId(id);
     await Posting.assertUserIsApprover(oid, user);
     //if in save also delete in save
+    console.log("deleting save item");
     await Saving.deleteItem(oid);
+    //if in event also delete in event
+    console.log("deleting event");
+    await Events.deleteByInfo(oid);
     return Posting.delete(oid);
   }
 
@@ -451,7 +459,8 @@ class Routes {
     await Posting.getPost(oid);
     await Saving.assertCanSave(name, oid, user);
     const save_oid = (await Saving.getSave(user, name))._id;
-    return Saving.save(save_oid, oid);
+    let response = await Saving.save(save_oid, oid);
+    return response;
   }
 
   /**

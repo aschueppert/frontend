@@ -48,6 +48,7 @@ onBeforeMount(async () => {
 
 <template>
   <section v-if="isLoggedIn">
+    <h1>Following Posts</h1>
     <section v-if="loaded && posts.length !== 0">
       <article v-for="post in posts" :key="post._id" :class="{ approved: post.status === 'Approved' }">
         <div class="overlap-container">
@@ -75,6 +76,12 @@ onBeforeMount(async () => {
     <!-- Loading message -->
     <p v-else>Loading...</p>
   </section>
+  <div v-else class="center">
+    <h1>Please log in</h1>
+    <router-link class="link" :to="{ name: 'Login' }">
+      <button class="btn-small pure-button primary">Login</button>
+    </router-link>
+  </div>
 </template>
 <style scoped>
 .overlap-container {
@@ -88,6 +95,12 @@ onBeforeMount(async () => {
 
 h1 {
   text-align: center;
+}
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .overlay {

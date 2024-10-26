@@ -8,7 +8,6 @@ const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
 
 <template>
   <main>
-    <h1>Following Posts</h1>
     <FollowingPostListComponent />
   </main>
 </template>

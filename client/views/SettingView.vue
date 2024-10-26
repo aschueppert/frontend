@@ -9,24 +9,12 @@ const { logoutUser, deleteUser } = useUserStore();
 
 async function logout() {
   await logoutUser();
-  void router.push({ name: "Home" });
-  void router.push({ name: "Drafts" });
-  void router.push({ name: "Posts" });
-  void router.push({ name: "Events" });
-  void router.push({ name: "Following" });
-  void router.push({ name: "Saved" });
-  router.push({ name: "Login" });
+  void router.push({ name: "Login" });
 }
 
 async function delete_() {
   await deleteUser();
   void router.push({ name: "Home" });
-  void router.push({ name: "Drafts" });
-  void router.push({ name: "Posts" });
-  void router.push({ name: "Events" });
-  void router.push({ name: "Following" });
-  void router.push({ name: "Saved" });
-  router.push({ name: "Login" });
 }
 </script>
 

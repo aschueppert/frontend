@@ -92,7 +92,7 @@ export default class DraftingConcept {
 
     const selectedSet = draft.selectedSet;
     await this.drafts.partialUpdateOne({ _id }, { selectedSet });
-    return { msg: `Selected set successfully updated to [${String(selectedSet)}]!` };
+    return { msg: `Selected set successfully updated!` };
   }
 
   async deselect(_id: ObjectId, content: string) {
@@ -109,7 +109,7 @@ export default class DraftingConcept {
       return item != content;
     });
     await this.drafts.partialUpdateOne({ _id }, { selectedSet });
-    return { msg: `Selected set successfully updated to ${String(selectedSet)}!` };
+    return { msg: `Selected set successfully updated!` };
   }
 
   async getContent(_id: ObjectId) {
