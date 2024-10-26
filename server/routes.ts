@@ -60,6 +60,7 @@ class Routes {
 
   @Router.post("/login")
   async logIn(session: SessionDoc, username: string, password: string) {
+    console.log(session);
     const u = await Authing.authenticate(username, password);
     Sessioning.start(session, u._id);
     return { msg: "Logged in!" };
